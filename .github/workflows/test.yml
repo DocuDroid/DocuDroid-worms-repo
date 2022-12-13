@@ -1,0 +1,14 @@
+on: pull_request
+
+jobs:
+  run-openapi:
+    runs-on: ubuntu-latest
+    name: Run Action
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          npm install openapi
+      - name: Run Script
+        run: |
+          node script.js
