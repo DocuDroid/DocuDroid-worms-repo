@@ -1,4 +1,3 @@
-
 const { context, github } = require('@actions/github');
 
 // Get the list of changed files from the pull request event
