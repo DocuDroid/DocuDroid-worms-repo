@@ -11,5 +11,7 @@ jobs:
           npm install openapi &&
           npm install @actions/github
       - name: Run Script
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
         run: |
           node ./script.js
