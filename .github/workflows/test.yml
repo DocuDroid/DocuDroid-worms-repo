@@ -12,5 +12,4 @@ jobs:
           npm install @actions/github
       - name: Run Script
         run: |
-          ls -la &&
           node ./script.js
