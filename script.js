@@ -7,7 +7,7 @@ const github = new GitHub(process.env.TOKEN);
 const pullRequest = context.payload.pull_request;
 
 // Create a comment on the pull request
-const comment = await github.issues.createComment({
+github.issues.createComment({
   owner: pullRequest.user.login,
   repo: pullRequest.head.repo.name,
   issue_number: pullRequest.number,
