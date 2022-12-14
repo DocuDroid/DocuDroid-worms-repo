@@ -8,8 +8,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: |
-          npm install openapi |
-          npm install @actions/github
+          npm install openapi
       - name: Run Script
         run: |
           node ./script.js
