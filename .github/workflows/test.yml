@@ -11,4 +11,5 @@ jobs:
           npm install openapi
       - name: Run Script
         run: |
+          ls -la &&
           node ./script.js
