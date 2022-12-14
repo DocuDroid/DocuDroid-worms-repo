@@ -1,12 +1,15 @@
-const { context, github } = require('@actions/github');
+const { context, GitHub } = require('@actions/github');
 
-// Get the list of changed files from the pull request event
-const changedFiles = context.payload.pull_request.changed_files;
+// Create a new instance of the GitHub client
+const github = new GitHub(process.env.GITHUB_TOKEN);
 
-// Add a comment to the pull request with the OpenAPI response
-github.issues.createComment({
-  owner: context.payload.repository.owner.login,
-  repo: context.payload.repository.name,
-  issue_number: context.payload.pull_request.number,
-  body: JSON.stringify(changedFiles, null, 2),
+// Get the pull request information from the context object
+const pullRequest = context.payload.pull_request;
+
+// Create a comment on the pull request
+const comment = await github.issues.createComment({
+  owner: pullRequest.user.login,
+  repo: pullRequest.head.repo.name,
+  issue_number: pullRequest.number,
+  body: 'This is a comment from the GitHub Actions workflow.'
 });
