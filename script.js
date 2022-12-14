@@ -1,7 +1,7 @@
 const { context, GitHub } = require('@actions/github');
 
 // Create a new instance of the GitHub client
-const github = new GitHub(process.env.GITHUB_TOKEN);
+const github = new GitHub(process.env.TOKEN);
 
 // Get the pull request information from the context object
 const pullRequest = context.payload.pull_request;
