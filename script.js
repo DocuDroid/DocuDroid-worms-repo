@@ -1,17 +1,15 @@
-import github from '@actions/github'
-import fetch from 'node-fetch'
+const github = require('@actions/github')
+const axios = require('axios')
 
 const octokit = github.getOctokit(process.env.TOKEN)
 const context = github.context
 
 const pullRequest = context.payload.pull_request;
 
-// pullRequest.diff_url
-console.log(JSON.stringify(github.context.payload, undefined, 2))
-
-fetch(pullRequest.diff_url, { method: 'get' })
-  .then(res => res.json)
-  .then(data => console.log(data))
+axios.get(pullRequest.diff_url)
+  .then(res => {
+    console.log(res)
+  })
 
 octokit.rest.issues.createComment({
   owner: pullRequest.user.login,
