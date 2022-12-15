@@ -5,7 +5,9 @@ const context = github.context
 
 const pullRequest = context.payload.pull_request;
 
-octokit.issues.createComment({
+console.log(JSON.stringify(pullRequest, null, 2))
+
+octokit.rest.issues.createComment({
   owner: pullRequest.user.login,
   repo: pullRequest.head.repo.name,
   issue_number: pullRequest.number,
