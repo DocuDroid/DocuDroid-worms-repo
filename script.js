@@ -1,6 +1,6 @@
 const github = require('@actions/github');
 
-const octokit = github.getOctokit(process.env.TOKEN)
+const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
 const context = github.context
 
 const pullRequest = context.payload.pull_request;
