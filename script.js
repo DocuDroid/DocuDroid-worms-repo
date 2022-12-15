@@ -9,12 +9,9 @@ const pullRequest = context.payload.pull_request;
 // pullRequest.diff_url
 console.log(JSON.stringify(github.context.payload, undefined, 2))
 
-const response = await fetch(pullRequest.diff_url, {
-	method: 'get',
-});
-const data = await response.json();
-
-console.log(data);
+fetch(pullRequest.diff_url, { method: 'get' })
+  .then(res => res.json)
+  .then(data => console.log(data))
 
 octokit.rest.issues.createComment({
   owner: pullRequest.user.login,
