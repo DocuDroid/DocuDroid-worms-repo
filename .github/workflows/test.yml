@@ -11,7 +11,7 @@ jobs:
         run: |
           npm install diff &&
           npm install openapi &&
-          npm install node-fetch &&
+          npm install axios &&
           npm install @actions/github
       - name: Run Script
         env:
