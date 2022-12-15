@@ -1,5 +1,5 @@
-const github = require('@actions/github')
-const fetch = require('node-fetch')
+import github from '@actions/github'
+import fetch from 'node-fetch'
 
 const octokit = github.getOctokit(process.env.TOKEN)
 const context = github.context
