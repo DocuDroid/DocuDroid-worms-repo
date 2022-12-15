@@ -3,6 +3,7 @@ on: pull_request
 jobs:
   run-openapi:
     runs-on: ubuntu-latest
+    environment: test
     name: Run Action
     steps:
       - uses: actions/checkout@v2
