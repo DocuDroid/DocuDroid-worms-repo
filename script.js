@@ -1,4 +1,5 @@
-const github = require('@actions/github');
+const github = require('@actions/github')
+const fetch = require('node-fetch')
 
 const octokit = github.getOctokit(process.env.TOKEN)
 const context = github.context
@@ -7,6 +8,13 @@ const pullRequest = context.payload.pull_request;
 
 // pullRequest.diff_url
 console.log(JSON.stringify(github.context.payload, undefined, 2))
+
+const response = await fetch(pullRequest.diff_url, {
+	method: 'get',
+});
+const data = await response.json();
+
+console.log(data);
 
 octokit.rest.issues.createComment({
   owner: pullRequest.user.login,
