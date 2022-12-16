@@ -31,7 +31,7 @@ async function start () {
   const rawResponse = await openai.createEdit({
     model: "text-davinci-edit-001",
     input: prBody,
-    instruction: "fix all bad grammar, remove unecessary word clutter",
+    instruction: "fix all grammar mistakes, remove unecessary word clutter, remove redundant wording, dont add more words than needed, dont change the text meaning",
     temperature: 0.7,
     top_p: 1,
   })
