@@ -37,11 +37,11 @@ async function start () {
   })
   const response = rawResponse.data.choices[0].text.trim()
   
-  const responseDiff = diff.diffLines(prBody, rawResponse.data.choices[0].text).map((part) => {
+  const responseDiff = diff.diffLines(prBody, rawResponse.data.choices[0].text).map((part) => 
     part.added
       ? '+ ' + part
       : '- ' + part
-  }).join('\n')
+  ).join('\n')
   
   await octokit.rest.issues.createComment({
     owner: pullRequest.user.login,
