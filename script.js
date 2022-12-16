@@ -15,8 +15,8 @@ const openai = new OpenAIApi(
 const formatAndLog = msg =>
   console.log(JSON.stringify(msg, null, 2))
 
-console.log("Payload:")
-formatAndLog(context.payload)
+// console.log("Payload:")
+// formatAndLog(context.payload)
 
 const pullRequest = context.payload.pull_request
 
@@ -33,7 +33,7 @@ async function start () {
   ).join('\n\n')
   
   console.log("PR Body:")
-  formatAndLog(body)
+  console.log(body)
   
   const rawResponse = await openai.createEdit({
     model: "text-davinci-edit-001",
