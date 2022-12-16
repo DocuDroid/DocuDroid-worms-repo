@@ -1,4 +1,5 @@
 const github = require('@actions/github')
+const openai = require('openai')
 const axios = require('axios')
 const diff = require('diff')
 
@@ -7,15 +8,25 @@ const context = github.context
 
 const pullRequest = context.payload.pull_request;
 
-axios.get(pullRequest.diff_url)
-  .then(res => {
-    console.log(JSON.stringify(diff.parsePatch(res.data), null, 2))
+async function start () {
+  
+  const res = await axios.get(pullRequest.diff_url)
+  
+  const body = diff.parsePatch(res.data).map(block => 
+    block.hunks.map(hunk => 
+      hunk.lines
+        .filter(line => line[0] !== '-')
+        .reduce((acc, line) => acc + '\n' + line, '')
+    ).join('\n\n')
+  ).join('\n\n')
+  
+  await octokit.rest.issues.createComment({
+    owner: pullRequest.user.login,
+    repo: pullRequest.head.repo.name,
+    issue_number: pullRequest.number,
+    body,
   })
+  
+}
 
-octokit.rest.issues.createComment({
-  owner: pullRequest.user.login,
-  repo: pullRequest.head.repo.name,
-  issue_number: pullRequest.number,
-  body: 'hiii',
-//   body: JSON.stringify(pullRequest, null, 2),
-});
+start()
