@@ -12,19 +12,13 @@ const openai = new OpenAIApi(
   })
 )
 
-const formatAndLog = msg =>
-  console.log(JSON.stringify(msg, null, 2))
-
-// console.log("Payload:")
-// formatAndLog(context.payload)
-
 const pullRequest = context.payload.pull_request
 
 async function start () {
   
   const res = await axios.get(pullRequest.diff_url)
   
-  const body = diff.parsePatch(res.data).map(block => 
+  const prBody = diff.parsePatch(res.data).map(block => 
     block.hunks.map(hunk => 
       hunk.lines
         .filter(line => line[0] === '+')
@@ -32,26 +26,20 @@ async function start () {
     ).join('\n\n')
   ).join('\n\n')
   
-  console.log("PR Body:")
-  console.log(body)
-  
   const rawResponse = await openai.createEdit({
     model: "text-davinci-edit-001",
-    input: "testttt",
+    input: prBody,
     instruction: "fix grammar, don't let a single grammar error pass, this text can't contain grammatical errors",
     temperature: 0.7,
     top_p: 1,
   })
   const response = rawResponse.data.choices[0].text.trim()
   
-  console.log("OpenAI Response:")
-  console.log(rawResponse)
-  
   await octokit.rest.issues.createComment({
     owner: pullRequest.user.login,
     repo: pullRequest.head.repo.name,
     issue_number: pullRequest.number,
-    response,
+    body: response,
   })
   
 }
