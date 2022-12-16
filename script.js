@@ -24,7 +24,7 @@ async function start () {
         .filter(line => line[0] === '+')
         .reduce((acc, line) => acc + '\n' + line, '')
     ).join('\n\n')
-  ).join('\n\n')
+  ).join('\n\n').trim()
   
   const rawResponse = await openai.createEdit({
     model: "text-davinci-edit-001",
