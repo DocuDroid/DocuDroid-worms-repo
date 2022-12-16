@@ -51,7 +51,7 @@ async function start () {
     owner: pullRequest.user.login,
     repo: pullRequest.head.repo.name,
     issue_number: pullRequest.number,
-    body,
+    response,
   })
   
 }
