@@ -12,6 +12,14 @@ const openai = new OpenAIApi(
   })
 )
 
+const formatAndLog = msg =>
+  console.log(JSON.stringify(msg, null, 2))
+
+console.log("Payload:")
+formatAndLog(context.payload)
+
+const pullRequest = context.payload.pull_request
+
 async function start () {
   
   const res = await axios.get(pullRequest.diff_url)
@@ -24,6 +32,9 @@ async function start () {
     ).join('\n\n')
   ).join('\n\n')
   
+  console.log("PR Body:")
+  formatAndLog(body)
+  
   const rawResponse = await openai.createEdit({
     model: "text-davinci-edit-001",
     input: body,
@@ -33,7 +44,8 @@ async function start () {
   })
   const response = rawResponse.data.choices[0].text.trim()
   
-  const pullRequest = context.payload.pull_request
+  console.log("OpenAI Response:")
+  formatAndLog(rawResponse)
   
   await octokit.rest.issues.createComment({
     owner: pullRequest.user.login,
