@@ -30,7 +30,7 @@ async function start () {
   
   const rawResponse = await openai.createEdit({
     model: "text-davinci-edit-001",
-    input: "tis text has som erroorr",
+    input: prBody,
     instruction: "fix grammar, don't let a single grammar error pass, this text can't contain grammatical errors",
     temperature: 0.7,
     top_p: 1,
