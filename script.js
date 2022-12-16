@@ -26,6 +26,9 @@ async function start () {
     ).join('\n\n')
   ).join('\n\n').trim()
   
+  console.log('PR Body:')
+  console.log(prBody)
+  
   const rawResponse = await openai.createEdit({
     model: "text-davinci-edit-001",
     input: prBody,
