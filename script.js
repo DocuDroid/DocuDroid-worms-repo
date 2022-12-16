@@ -27,7 +27,7 @@ async function start () {
   const body = diff.parsePatch(res.data).map(block => 
     block.hunks.map(hunk => 
       hunk.lines
-        .filter(line => line[0] !== '-')
+        .filter(line => line[0] === '+')
         .reduce((acc, line) => acc + '\n' + line, '')
     ).join('\n\n')
   ).join('\n\n')
@@ -45,7 +45,7 @@ async function start () {
   const response = rawResponse.data.choices[0].text.trim()
   
   console.log("OpenAI Response:")
-  console.log(response)
+  console.log(rawResponse)
   
   await octokit.rest.issues.createComment({
     owner: pullRequest.user.login,
