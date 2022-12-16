@@ -22,13 +22,11 @@ async function start () {
     block.hunks.map(hunk => 
       hunk.lines
         .filter(line => line[0] === '+')
+        .map(line => line.substring(1))
+        .filter(line => line !== '')
         .reduce((acc, line) => acc + '\n' + line, '')
     ).join('\n\n')
   ).join('\n\n').trim()
-  
-  console.log('PR Body:')
-  console.log(typeof prBody)
-  console.log(prBody)
   
   const rawResponse = await openai.createEdit({
     model: "text-davinci-edit-001",
