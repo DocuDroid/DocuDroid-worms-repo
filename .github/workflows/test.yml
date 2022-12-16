@@ -15,6 +15,7 @@ jobs:
           npm install @actions/github
       - name: Run Script
         env:
-          TOKEN: ${{ secrets.TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
         run: |
           node ./script.js
