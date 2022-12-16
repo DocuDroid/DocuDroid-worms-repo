@@ -43,6 +43,8 @@ async function start () {
       : '- ' + part
   ).join('\n')
   
+  console.log(responseDiff)
+  
   await octokit.rest.issues.createComment({
     owner: pullRequest.user.login,
     repo: pullRequest.head.repo.name,
