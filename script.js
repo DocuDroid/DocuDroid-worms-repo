@@ -39,8 +39,8 @@ async function start () {
   
   const responseDiff = diff.diffLines(prBody, rawResponse.data.choices[0].text).map((part) => 
     part.added
-      ? '+ ' + part
-      : '- ' + part
+      ? '+ ' + part.value
+      : '- ' + part.value
   ).join('\n')
   
   console.log(responseDiff)
@@ -49,7 +49,7 @@ async function start () {
     owner: pullRequest.user.login,
     repo: pullRequest.head.repo.name,
     issue_number: pullRequest.number,
-    body: responseDiff,
+    body: `GPT-powered suggestions: \n\`\`\`\n${responseDiff}\n\`\`\``,
   })
   
 }
