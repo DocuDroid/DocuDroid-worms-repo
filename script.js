@@ -33,7 +33,7 @@ async function start () {
   ).join('\n\n')
   
   console.log("PR Body:")
-//   formatAndLog(body)
+  formatAndLog(body)
   
   const rawResponse = await openai.createEdit({
     model: "text-davinci-edit-001",
@@ -45,7 +45,7 @@ async function start () {
   const response = rawResponse.data.choices[0].text.trim()
   
   console.log("OpenAI Response:")
-//   formatAndLog(rawResponse)
+  console.log(response)
   
   await octokit.rest.issues.createComment({
     owner: pullRequest.user.login,
