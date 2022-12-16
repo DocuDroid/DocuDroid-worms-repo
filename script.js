@@ -6,11 +6,11 @@ const diff = require('diff')
 const octokit = github.getOctokit(process.env.GH_TOKEN)
 const context = github.context
 
-const configureOpenai = apiKey => new OpenAIApi(
-  new Configuration({ apiKey: process.env.OPENAI_TOKEN })
+const openai = new OpenAIApi(
+  new Configuration({
+    apiKey: process.env.OPENAI_TOKEN
+  })
 )
-
-const openai = configureOpenai(apiKey)
 
 async function start () {
   
