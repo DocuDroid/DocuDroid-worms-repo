@@ -31,7 +31,7 @@ async function start () {
   const rawResponse = await openai.createEdit({
     model: "text-davinci-edit-001",
     input: prBody,
-    instruction: "fix grammar, don't let a single grammar error pass, this text can't contain grammatical errors",
+    instruction: "fix all bad grammar, remove unecessary word clutter",
     temperature: 0.7,
     top_p: 1,
   })
@@ -49,7 +49,7 @@ async function start () {
     owner: pullRequest.user.login,
     repo: pullRequest.head.repo.name,
     issue_number: pullRequest.number,
-    body: `GPT-powered suggestions: \n\`\`\`\n${responseDiff}\n\`\`\``,
+    body: `GPT-powered suggestions: \n\`\`\`\n${responseDiff}\`\`\``,
   })
   
 }
