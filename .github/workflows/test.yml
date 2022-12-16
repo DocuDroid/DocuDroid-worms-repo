@@ -10,8 +10,8 @@ jobs:
       - name: Install dependencies
         run: |
           npm install diff &&
-          npm install openapi &&
           npm install axios &&
+          npm install openai &&
           npm install @actions/github
       - name: Run Script
         env:
