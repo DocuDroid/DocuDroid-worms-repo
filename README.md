@@ -25,10 +25,10 @@ This Github workflow action sends any new text added in a PR to GPT Edit for gra
 
 ## What I want it to do:
 
-- typos and grammar 
-- narrator tone standardization
-- jargon removal
-- reduce useless words
-- break long phrases and sentences into smaller ones
-- top-to-bottom concept linearization (explain concepts before usage)
-- technical review (factual review)
+- Yypos and grammar 
+- Narrator tone standardization
+- Jargon removal
+- Reduce useless words
+- Break long phrases and sentences into smaller ones
+- Top-to-bottom concept linearization (explain concepts before usage)
+- Technical review (factual review)
