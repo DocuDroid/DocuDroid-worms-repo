@@ -21,7 +21,7 @@ const pullRequest = context.payload.pull_request
 
 // config instructions for each review type for GPT-Edit
 const baseInstruction = "review this text, your focus is "
-const prompts: [
+const prompts = [
   {
     instruction: baseInstruction + "to fix all typos and grammar so it doesn't have any errors, the text should have no typos at all",
   },
