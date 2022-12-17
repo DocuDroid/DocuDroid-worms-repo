@@ -1,6 +1,12 @@
 # GPT Edit Workflow Action
 
-I made this action so it automatically sends new text being added in PRs to GPT-Edit API and ask it to fix grammar. The idea is to help avoiding any pushing grammar errors to prod.
+Writing bot at your service 🤖
+
+<img src="https://cdn.discordapp.com/attachments/1009590950894505994/1053057379517878352/Worms_profile_picture_for_robot_that_helps_with_writing_ios_app_a37f5420-29eb-484c-b6fd-7a4f6c0269f1.png" width="300px" />
+
+Avoid pushing grammar errors to prod!
+
+I made this action so it automatically sends new text being added in PRs to GPT-Edit API and ask it to fix grammar.
 
 1) copy the .yml and .js files to your repo to the same paths
 2) in your repo settings go to "enviroments" and add a github token as `GH_TOKEN` and openai token as `OPENAI_TOKEN`
