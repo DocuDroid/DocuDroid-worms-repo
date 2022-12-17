@@ -25,28 +25,28 @@ const prompts = [
   {
     instruction: baseInstruction + "to fix all typos and grammar so it doesn't have any errors, the text should have no typos at all",
   },
-  {
-    instruction: baseInstruction + "narrator tone standardization, the narrator tone should be the same across the text",
-  },
-  {
-    instruction: baseInstruction + "jargon removal, use words that can be understand by most people",
-  },
-  {
-    instruction: baseInstruction + "reducing useless words, replace many words that can have the same meaning with fewer words",
-  },
-  {
-    instruction: baseInstruction + "breaking long phrases and sentences into smaller ones, use commans and periods propperly",
-  },
-  {
-    instruction: baseInstruction + "top-to-bottom concept linearization, concepts should be explained before usage, acronyms should be explained at least once",
-  },
-  {
-    instruction: baseInstruction + "technical review, factual review, signalize wrong facts with * so I can review them, if you have comments leave on the end of the text about each * you added",
-  },
-  {
-    instruction: "review this text like a professional copywriter for the best acessibility possible",
-    temperature: 1,
-  },
+//   {
+//     instruction: baseInstruction + "narrator tone standardization, the narrator tone should be the same across the text",
+//   },
+//   {
+//     instruction: baseInstruction + "jargon removal, use words that can be understand by most people",
+//   },
+//   {
+//     instruction: baseInstruction + "reducing useless words, replace many words that can have the same meaning with fewer words",
+//   },
+//   {
+//     instruction: baseInstruction + "breaking long phrases and sentences into smaller ones, use commans and periods propperly",
+//   },
+//   {
+//     instruction: baseInstruction + "top-to-bottom concept linearization, concepts should be explained before usage, acronyms should be explained at least once",
+//   },
+//   {
+//     instruction: baseInstruction + "technical review, factual review, signalize wrong facts with * so I can review them, if you have comments leave on the end of the text about each * you added",
+//   },
+//   {
+//     instruction: "review this text like a professional copywriter for the best acessibility possible",
+//     temperature: 1,
+//   },
 ]
 
 async function start () {
@@ -69,7 +69,7 @@ async function start () {
   prompts.forEach(async (prompt, i) => {
     
     // delays 5 seconds between each call so we dont spam apis
-    await new Promise(resolve => setTimeout(resolve, i * 5000))
+    // await new Promise(resolve => setTimeout(resolve, i * 5000))
                 
     // sends text added in PR to GPT-Edit for revision, prompts can override all default values here
     const rawResponse = await openai.createEdit({
@@ -86,7 +86,9 @@ async function start () {
       part.added
         ? 'ADD LINE: ' + part.value
         : 'DEL LINE: ' + part.value
-    ).filter(el => el !== '').join('\n')
+    ).join('\n')
+    
+    console.log(JSON.stringify(diff.diffLines(prLinesAdded, rawResponse.data.choices[0].text), null, 2))
 
     // create response on github
     await octokit.rest.issues.createComment({
