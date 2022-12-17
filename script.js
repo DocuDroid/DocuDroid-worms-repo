@@ -86,7 +86,7 @@ async function start () {
     const responseDiff = diff.diffWords(prLinesAdded, rawResponse.data.choices[0].text).map((part) => 
       part.added
         ? 'ADD WORD: ' + part.value
-        : part.added.removed
+        : part.removed
           ? 'DEL WORD: ' + part.value
           : null
     ).filter(el => el !== null).join('\n')
