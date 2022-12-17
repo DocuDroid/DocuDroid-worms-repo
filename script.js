@@ -86,8 +86,10 @@ async function start () {
     const responseDiff = diff.diffWords(prLinesAdded, rawResponse.data.choices[0].text).map((part) => 
       part.added
         ? 'ADD WORD: ' + part.value
-        : 'DEL WORD: ' + part.value
-    ).join('\n')
+        : part.added.removed
+          ? 'DEL WORD: ' + part.value
+          : null
+    ).filter(el => el !== null).join('\n')
     
     console.log(JSON.stringify(diff.diffLines(prLinesAdded, rawResponse.data.choices[0].text), null, 2))
 
