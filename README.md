@@ -23,7 +23,7 @@ This Github workflow action sends any new text added in a PR to GPT Edit for gra
 
 ![image](https://user-images.githubusercontent.com/7863230/208171338-8dd5c13c-255e-43e0-a6ed-955cd007137b.png)
 
-## What I want it to review before saying this project is done
+## What I want it to do:
 
 - typos and grammar 
 - narrator tone standardization
