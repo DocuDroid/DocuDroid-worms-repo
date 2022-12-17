@@ -66,7 +66,7 @@ async function start () {
   ).join('\n\n').trim()
   
   // iterates all prompts
-  prompts.forEach((prompt, i) => {
+  prompts.forEach(async (prompt, i) => {
     
     // delays 5 seconds between each call so we dont spam apis
     await new Promise(resolve => setTimeout(resolve, i * 5000))
