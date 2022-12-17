@@ -1,4 +1,4 @@
-# GPT Edit Workflow Action
+# DocuDroid
 
 Writing bot at your service 🤖
 
@@ -6,7 +6,9 @@ Writing bot at your service 🤖
 
 Avoid pushing grammar errors to prod!
 
-I made this action so it automatically sends new text being added in PRs to GPT-Edit API and ask it to fix grammar.
+This Github workflow action sends any new text added in a PR to GPT Edit for grammar review.
+
+## Add to your repo
 
 1) copy the .yml and .js files to your repo to the same paths
 2) in your repo settings go to "enviroments" and add a github token as `GH_TOKEN` and openai token as `OPENAI_TOKEN`
