@@ -24,6 +24,7 @@ const baseInstruction = "review this text, your focus is "
 const prompts = [
   {
     instruction: baseInstruction + "to fix all typos and grammar so it doesn't have any errors, the text should have no typos at all",
+    temperature: 0.2,
   },
 //   {
 //     instruction: baseInstruction + "narrator tone standardization, the narrator tone should be the same across the text",
@@ -43,10 +44,10 @@ const prompts = [
 //   {
 //     instruction: baseInstruction + "technical review, factual review, signalize wrong facts with * so I can review them, if you have comments leave on the end of the text about each * you added",
 //   },
-  {
-    instruction: "review this text like a professional copywriter for the best acessibility possible",
-    temperature: 1,
-  },
+//   {
+//     instruction: "review this text like a professional copywriter for the best acessibility possible",
+//     temperature: 1,
+//   },
 ]
 
 async function start () {
@@ -82,10 +83,10 @@ async function start () {
     const response = rawResponse.data.choices[0].text.trim()
 
     // create response diff between text added and text reviewed by GPT-Edit, sending the entire gpt-edit response would be to cumbersome to read it all again.
-    const responseDiff = diff.diffLines(prLinesAdded, rawResponse.data.choices[0].text, { newlineIsToken: true }).map((part) => 
+    const responseDiff = diff.diffWords(prLinesAdded, rawResponse.data.choices[0].text).map((part) => 
       part.added
-        ? 'ADD LINE: ' + part.value
-        : 'DEL LINE: ' + part.value
+        ? 'ADD WORD: ' + part.value
+        : 'DEL WORD: ' + part.value
     ).join('\n')
     
     console.log(JSON.stringify(diff.diffLines(prLinesAdded, rawResponse.data.choices[0].text), null, 2))
