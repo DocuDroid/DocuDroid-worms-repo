@@ -10,7 +10,7 @@ This Github workflow action sends any new text added in a PR to GPT Edit for gra
 
 ## Add to your repo
 
-1) Copy the .yml and .js files to your repo to the same paths
+1) Copy the .yml and .js files to your repo to the same paths. Use one of the [releases](https://github.com/MarcoWorms/DocuDroid/releases) to guarantee that you are using a stable version of DocuDroid.
 2) In your repo settings go to "enviroments" and add a github token as `GH_TOKEN` and openai token as `OPENAI_TOKEN`
 3) It's done, new PRs opened against your repo will have a reply with grammar fixes for new text added
 4) If you want to change the Edit prompt being sent to OpenAI change this [line](https://github.com/MarcoWorms/actions-test/blob/main/script.js#L34)
@@ -25,10 +25,10 @@ This Github workflow action sends any new text added in a PR to GPT Edit for gra
 
 ## What I want it to do:
 
-- typos and grammar 
-- narrator tone standardization
-- jargon removal
-- reduce useless words
-- break long phrases and sentences into smaller ones
-- top-to-bottom concept linearization (explain concepts before usage)
-- technical review (factual review)
+- Typos and grammar 
+- Narrator tone standardization
+- Jargon removal
+- Reduce useless words
+- Break long phrases and sentences into smaller ones
+- Top-to-bottom concept linearization (explain concepts before usage)
+- Technical review (factual review)
