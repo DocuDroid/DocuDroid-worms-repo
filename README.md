@@ -8,6 +8,8 @@ Avoid pushing copy errors to prod!
 
 This Github workflow action sends any new text added in a PR to GPT Edit for grammar review.
 
+- [Latest Version Showcase](https://github.com/MarcoWorms/DocuDroid/pull/49)
+
 ## Add to your repo
 
 1) Copy the .yml and .js files to your repo to the same paths. Use one of the [releases](https://github.com/MarcoWorms/DocuDroid/releases) to guarantee that you are using a stable version of DocuDroid.
