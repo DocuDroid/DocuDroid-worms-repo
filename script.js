@@ -82,7 +82,7 @@ async function start () {
       owner: pullRequest.user.login,
       repo: pullRequest.head.repo.name,
       issue_number: pullRequest.number,
-      body: `### DocuDroid Automated Review \n\n **Instructions:** *${prompt.instruction}*\n\n---\n#### Suggestions:**\n\`\`\`\n${responseDiff}\n\`\`\`\n---\n#### Raw Result:**\n\`\`\`\n${response}\n\`\`\``,
+      body: `### DocuDroid Automated Review \n\n **Instructions:** *${prompt.instruction}*\n\n---\n#### Suggestions:\n\`\`\`\n${responseDiff}\n\`\`\`\n---\n#### Raw Result:\n\`\`\`\n${response}\n\`\`\``,
     })
   })
  
