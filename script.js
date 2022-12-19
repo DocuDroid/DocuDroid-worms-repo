@@ -55,7 +55,7 @@ async function start () {
   // testing new way to review
   const rawResponse1 = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: `Make pull request review for the following PR diff, make sure there are no grammars and typos being introduced:\n\n${prDiff.data}\n\n`,
+    prompt: `Act as a professional copywriter, avoid bullshit. Make a pull request review for the following PR diff, make sure there are no grammars and typos being introduced:\n\n${prDiff.data}\n\n`,
     temperature: 0.7,
     top_p: 1,
     max_tokens: 2000,
@@ -67,7 +67,7 @@ async function start () {
     owner: pullRequest.user.login, // only works for the repo owner atm
     repo: pullRequest.head.repo.name,
     issue_number: pullRequest.number,
-    body: response1,
+    body: `### DocuDroid Review \n\n${response1}`,
   })
   
   // iterates all prompts
@@ -100,7 +100,7 @@ async function start () {
       owner: pullRequest.user.login,
       repo: pullRequest.head.repo.name,
       issue_number: pullRequest.number,
-      body: `### DocuDroid Review \n\n Instructions: *${prompt.instruction}*\n\n---\n#### Suggestions:\n\`\`\`\n${responseDiff}\n\`\`\`\n---\n#### Raw Result:\n\`\`\`\n${response}\n\`\`\``,
+      body: `### DocuDroid Suggestions \n\n **Instructions:** `${prompt.instruction}`\n\n---\n#### Suggestions:\n\`\`\`\n${responseDiff}\n\`\`\`\n---\n#### Raw Result:\n\`\`\`\n${response}\n\`\`\``,
     })
   })
  
