@@ -53,15 +53,15 @@ async function start () {
   ).join('\n\n').trim()
   
   // testing new way to review
-  const rawResponse1 = await openai.createEdit({
-      model: "text-davinci-003",
-      prompt: `tell me a joke`,
-      temperature: 0.7,
-      top_p: 1,
-      max_tokens: 2000,
-      frequency_penalty: 0,
-      presence_penalty: 0,
-    })
+  const rawResponse1 = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: `Make pull request review for the following PR diff, make sure there are no grammars and typos being introduced:\n\n${prDiff.data}\n\n`,
+    temperature: 0.7,
+    top_p: 1,
+    max_tokens: 2000,
+    frequency_penalty: 0,
+    presence_penalty: 0,
+  })
   const response1 = rawResponse1.data.choices[0].text.trim()
   await octokit.rest.issues.createComment({
     owner: pullRequest.user.login, // only works for the repo owner atm
