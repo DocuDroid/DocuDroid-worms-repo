@@ -71,9 +71,9 @@ async function start () {
     // create response diff between text added and text reviewed by GPT-Edit, sending the entire gpt-edit response would be to cumbersome to read it all again.
     const responseDiff = diff.diffWords(prLinesAdded, rawResponse.data.choices[0].text).map((part) => 
       part.added
-        ? '**' + part.value + '**'
+        ? '`' + part.value.trim() + '`'
         : part.removed
-          ? '~' + part.value + '~'
+          ? '~' + part.value.trim() + '~'
           : part.value
     ).filter(el => el !== null).join('')
     
@@ -82,7 +82,7 @@ async function start () {
       owner: pullRequest.user.login,
       repo: pullRequest.head.repo.name,
       issue_number: pullRequest.number,
-      body: `##DocuDroid Automated Review\nInstructions: \`${prompt.instruction}\` \n\n**Changes:**\n\n${responseDiff}\n\n  \n\n**Result:**\n\`\`\`\n${response}\n\`\`\``,
+      body: `## DocuDroid Automated Review\n\nInstructions: \`${prompt.instruction}\` \n\n**Changes:**\n\n${responseDiff}\n\n  \n\n**Result:**\n\`\`\`\n${response}\n\`\`\``,
     })
   })
  
