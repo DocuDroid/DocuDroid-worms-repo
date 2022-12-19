@@ -6,7 +6,7 @@ Writing bot at your service 🤖
 
 Avoid pushing copy errors to prod!
 
-This Github workflow action sends any new text added in a PR to GPT Edit for grammar review.
+DocuDroid is a Github workflow action that sends any new text added in a PR to GPT Edit for grammar review.
 
 - [Latest Version Showcase](https://github.com/MarcoWorms/DocuDroid/pull/49)
 
@@ -20,7 +20,7 @@ This Github workflow action sends any new text added in a PR to GPT Edit for gra
 ## Current Features
 
 - Typos and grammar fixes
-- Multiple dynamic prompts can be set, each prompt is sent as a sepparate comment on the PR
+- Multiple dynamic prompts can be set, each prompt is sent as a sepparate comment in your PR
 
 ## Wanted Features
 
