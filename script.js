@@ -20,34 +20,15 @@ const openai = new OpenAIApi(
 const pullRequest = context.payload.pull_request
 
 // config instructions for each review type for GPT-Edit
-const baseInstruction = "review this text, your focus is "
 const prompts = [
   {
-    instruction: baseInstruction + "to fix all typos and grammar so it doesn't have any errors, the text should have no typos at all",
+    instruction: "fix all typos and grammar so it doesn't have any errors, the text should have no typos at all",
     temperature: 0.2,
   },
-//   {
-//     instruction: baseInstruction + "narrator tone standardization, the narrator tone should be the same across the text",
-//   },
-//   {
-//     instruction: baseInstruction + "jargon removal, use words that can be understand by most people",
-//   },
-//   {
-//     instruction: baseInstruction + "reducing useless words, replace many words that can have the same meaning with fewer words",
-//   },
-//   {
-//     instruction: baseInstruction + "breaking long phrases and sentences into smaller ones, use commans and periods propperly",
-//   },
-//   {
-//     instruction: baseInstruction + "top-to-bottom concept linearization, concepts should be explained before usage, acronyms should be explained at least once",
-//   },
-//   {
-//     instruction: baseInstruction + "technical review, factual review, signalize wrong facts with * so I can review them, if you have comments leave on the end of the text about each * you added",
-//   },
-//   {
-//     instruction: "review this text like a professional copywriter for the best acessibility possible",
-//     temperature: 1,
-//   },
+  {
+    instruction: "review this text like a professional copywriter for the best acessibility possible",
+    temperature: 1,
+  },
 ]
 
 async function start () {
