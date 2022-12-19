@@ -29,6 +29,10 @@ const prompts = [
     instruction: "review this text like a professional copywriter for the best acessibility possible",
     temperature: 1,
   },
+  {
+    instruction: "improve text clarity and readability, maintain the meaning",
+    temperature: 1,
+  },
 ]
 
 async function start () {
