@@ -48,8 +48,8 @@ async function start () {
         .map(line => line.substring(1))
         .filter(line => line !== '')
         .reduce((acc, line) => acc + '\n' + line, '')
-    ).join('\n\n')
-  ).join('\n\n').trim()
+    ).join('\n\n---END OF HUNK ---\n\n')
+  ).join('\n\n--- END OF BLOCK ---\n\n').trim()
   
   // iterates all prompts
   prompts.forEach(async (prompt, i) => {
@@ -68,13 +68,13 @@ async function start () {
     const response = rawResponse.data.choices[0].text.trim()
 
     // create response diff between text added and text reviewed by GPT-Edit, sending the entire gpt-edit response would be to cumbersome to read it all again.
-    const responseDiff = diff.diffWords(prLinesAdded, rawResponse.data.choices[0].text).map((part) => 
+    const responseDiff = diff.diffLines(prLinesAdded, rawResponse.data.choices[0].text).map((part) => 
       part.added
-        ? 'ADD WORD: ' + part.value
+        ? 'ADD LINE: ' + part.value
         : part.removed
-          ? 'DEL WORD: ' + part.value
+          ? 'DEL LINE: ' + part.value
           : null
-    ).filter(el => el !== null).join('\n')
+    ).filter(el => el !== null).join('\n\n')
     
     // create response on github
     await octokit.rest.issues.createComment({
