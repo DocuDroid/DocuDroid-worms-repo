@@ -69,11 +69,11 @@ async function start () {
     const response = rawResponse.data.choices[0].text.trim()
 
     // create response diff between text added and text reviewed by GPT-Edit, sending the entire gpt-edit response would be to cumbersome to read it all again.
-    const responseDiff = diff.diffLines(prLinesAdded, rawResponse.data.choices[0].text).map((part) => 
+    const responseDiff = diff.diffLines(prLinesAdded.trim(), rawResponse.data.choices[0].text.trim()).map((part) => 
       part.added
-        ? 'ADD LINE:' + part.value
+        ? 'ADD LINE: ' + part.value
         : part.removed
-          ? 'DEL LINE:' + part.value
+          ? 'DEL LINE: ' + part.value
           : null
     ).filter(el => el !== null).join('\n')
     
