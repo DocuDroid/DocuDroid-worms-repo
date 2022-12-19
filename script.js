@@ -48,8 +48,9 @@ async function start () {
         .map(line => line.substring(1))
         .filter(line => line !== '')
         .reduce((acc, line) => acc + '\n' + line, '')
-    ).join('\n\n---END OF HUNK ---\n\n')
-  ).join('\n\n--- END OF BLOCK ---\n\n').trim()
+        .trim()
+    ).join('\n\n')
+  ).join('\n\n').trim()
   
   // iterates all prompts
   prompts.forEach(async (prompt, i) => {
