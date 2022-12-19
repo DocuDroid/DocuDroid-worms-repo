@@ -86,3 +86,5 @@ async function start () {
 }
 
 start()
+
+// should not trigger the bot because no MD files were changed
