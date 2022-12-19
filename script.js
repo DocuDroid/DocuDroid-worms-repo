@@ -69,20 +69,20 @@ async function start () {
     const response = rawResponse.data.choices[0].text.trim()
 
     // create response diff between text added and text reviewed by GPT-Edit, sending the entire gpt-edit response would be to cumbersome to read it all again.
-    const responseDiff = diff.diffLines(prLinesAdded, rawResponse.data.choices[0].text).map((part) => 
+    const responseDiff = diff.diffWords(prLinesAdded, rawResponse.data.choices[0].text).map((part) => 
       part.added
-        ? 'ADD LINE: ' + part.value.trim()
+        ? '**' + part.value + '**'
         : part.removed
-          ? 'DEL LINE: ' + part.value.trim()
-          : null
-    ).filter(el => el !== null).join('\n\n')
+          ? '~' + part.value + '~'
+          : part.value
+    ).filter(el => el !== null).join('')
     
     // create response on github
     await octokit.rest.issues.createComment({
       owner: pullRequest.user.login,
       repo: pullRequest.head.repo.name,
       issue_number: pullRequest.number,
-      body: `##DocuDroid Automated Review\nInstructions: \`${prompt.instruction}\` \n\n**Changes:**\n\`\`\`\n${responseDiff}\n\`\`\`  \n\n**Result:**\n\`\`\`\n${response}\n\`\`\``,
+      body: `##DocuDroid Automated Review\nInstructions: \`${prompt.instruction}\` \n\n**Changes:**\n\n${responseDiff}\n\n  \n\n**Result:**\n\`\`\`\n${response}\n\`\`\``,
     })
   })
  
