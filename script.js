@@ -55,7 +55,7 @@ async function start () {
   prompts.forEach(async (prompt, i) => {
     
     // delays 5 seconds between each call so we dont spam apis
-    // await new Promise(resolve => setTimeout(resolve, i * 5000))
+    await new Promise(resolve => setTimeout(resolve, i * 5000))
                 
     // sends text added in PR to GPT-Edit for revision, prompts can override all default values here
     const rawResponse = await openai.createEdit({
