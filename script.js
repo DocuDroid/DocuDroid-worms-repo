@@ -55,9 +55,12 @@ async function start () {
   // testing new way to review
   const rawResponse1 = await openai.createEdit({
       model: "text-davinci-003",
-      input: `Make pull request review for the following PR diff, make sure there are no grammars and typos being introduced:\n\n${prDiff}\n\n`,
+      prompt: `Make pull request review for the following PR diff, make sure there are no grammars and typos being introduced:\n\n${prDiff}\n\n`,
       temperature: 0.7,
       top_p: 1,
+      max_tokens: 2000,
+      frequency_penalty: 0,
+      presence_penalty: 0,
     })
   const response1 = rawResponse1.data.choices[0].text.trim()
   await octokit.rest.issues.createComment({
