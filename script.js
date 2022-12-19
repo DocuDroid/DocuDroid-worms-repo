@@ -26,10 +26,10 @@ const prompts = [
     temperature: 0.2,
   },
   {
-    instruction: "review this text like a professional copywriter for the best acessibility possible",
+    instruction: "improve text clarity and readability, maintain the meaning",
     temperature: 1,
   },
-  {
+    {
     instruction: "improve text clarity and readability, maintain the meaning",
     temperature: 1,
   },
@@ -51,6 +51,21 @@ async function start () {
         .trim()
     ).join('\n\n')
   ).join('\n\n').trim()
+  
+  // testing new way to review
+  const rawResponse1 = await openai.createEdit({
+      model: "text-davinci-003",
+      input: `Make pull request review for the following PR diff, make sure there are no grammars and typos being introduced:\n\n${prDiff}\n\n`,
+      temperature: 0.7,
+      top_p: 1,
+    })
+  const response1 = rawResponse1.data.choices[0].text.trim()
+  await octokit.rest.issues.createComment({
+    owner: pullRequest.user.login, // only works for the repo owner atm
+    repo: pullRequest.head.repo.name,
+    issue_number: pullRequest.number,
+    body: response1,
+  })
   
   // iterates all prompts
   prompts.forEach(async (prompt, i) => {
@@ -82,7 +97,7 @@ async function start () {
       owner: pullRequest.user.login,
       repo: pullRequest.head.repo.name,
       issue_number: pullRequest.number,
-      body: `### DocuDroid Automated Review \n\n **Instructions:** *${prompt.instruction}*\n\n---\n#### Suggestions:\n\`\`\`\n${responseDiff}\n\`\`\`\n---\n#### Raw Result:\n\`\`\`\n${response}\n\`\`\``,
+      body: `### DocuDroid Review \n\n Instructions: *${prompt.instruction}*\n\n---\n#### Suggestions:\n\`\`\`\n${responseDiff}\n\`\`\`\n---\n#### Raw Result:\n\`\`\`\n${response}\n\`\`\``,
     })
   })
  
