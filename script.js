@@ -55,7 +55,7 @@ async function start () {
   // testing new way to review
   const rawResponse1 = await openai.createEdit({
       model: "text-davinci-003",
-      prompt: `Make pull request review for the following PR diff, make sure there are no grammars and typos being introduced:\n\n${prDiff}\n\n`,
+      prompt: `Make pull request review for the following PR diff, make sure there are no grammars and typos being introduced:\n\n${prDiff.data}\n\n`,
       temperature: 0.7,
       top_p: 1,
       max_tokens: 2000,
@@ -74,7 +74,7 @@ async function start () {
   prompts.forEach(async (prompt, i) => {
     
     // delays 5 seconds between each call so we dont spam apis
-    await new Promise(resolve => setTimeout(resolve, i * 5000))
+    await new Promise(resolve => setTimeout(resolve, i * 10000))
                 
     // sends text added in PR to GPT-Edit for revision, prompts can override all default values here
     const rawResponse = await openai.createEdit({
