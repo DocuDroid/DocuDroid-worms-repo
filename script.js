@@ -29,10 +29,6 @@ const prompts = [
     instruction: "improve text clarity and readability, maintain the meaning",
     temperature: 1,
   },
-    {
-    instruction: "improve text clarity and readability, maintain the meaning",
-    temperature: 1,
-  },
 ]
 
 async function start () {
@@ -55,7 +51,7 @@ async function start () {
   // testing new way to review
   const rawResponse1 = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: `Act as a professional copywriter, avoid bullshit. Make a pull request review for the following PR diff, make sure there are no grammars and typos being introduced:\n\n${prDiff.data}\n\n`,
+    prompt: `Act as a professional copywriter and coder. Make a pull request review for the following PR diff, make sure there are no grammars and typos being introduced, answer with only suggestions you have for improvements:\n\n${prDiff.data}\n\n`,
     temperature: 0.7,
     top_p: 1,
     max_tokens: 2000,
