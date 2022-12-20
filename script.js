@@ -19,7 +19,7 @@ const openai = new OpenAIApi(
 // obtain current PR data
 const pullRequest = context.payload.pull_request
 
-const basePrompt = `As a professional copywriter and coder, make a pull request review for the following PR diff, there should be no grammars and typos being introduced, answer straightforward and list direct improvements`
+const basePrompt = `As a professional copywriter and coder, make a pull request review for the following PR diff, there should be no grammars and typos being introduced, answer straightforward and list direct improvements formatted so humans can easily apply your suggestions.`
 // config instructions for each review type for GPT-Edit
 const commands = [
   {
@@ -62,15 +62,17 @@ async function start () {
     
     // delays 5 seconds between each call so we dont spam apis
     await new Promise(resolve => setTimeout(resolve, i * 5000))
-
+    
+    const prompt = command.prompt + `\n\n${prDiff.data}\n\n`
+    
     const rawResponse = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: command.prompt + `\n\n${prDiff.data}\n\n`,
-      temperature: command.temperature || 0.5,
       top_p: 1,
-      max_tokens: 2000,
+      max_tokens: 4000 - Math.floor((prompt.length / 3) * 4),
       frequency_penalty: 0,
       presence_penalty: 0,
+      prompt,
+      temperature: command.temperature || 0.5,
     })
     
     const response = rawResponse.data.choices[0].text.trim()
