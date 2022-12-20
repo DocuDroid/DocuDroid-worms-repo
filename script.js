@@ -42,7 +42,6 @@ async function start () {
   
   // gets all lines added in this PR diff
   // not used atm but can be used to send less tokens to GPT API and deal with the 4k token limit on lerger PRs
-  
 //   const prLinesAdded = diff.parsePatch(prDiff.data).map(block => 
 //     block.hunks.map(hunk => 
 //       hunk.lines
@@ -77,6 +76,8 @@ async function start () {
       issue_number: pullRequest.number,
       body: `### DocuDroid Review\n\nInstructions: *${command.prompt}*\nTemperature: *${command.temperature}*\n\n---\n\n${response}`,
     })
+  
+  }
 
 }
 
