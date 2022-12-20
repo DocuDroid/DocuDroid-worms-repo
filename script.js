@@ -81,7 +81,7 @@ async function start () {
       owner: pullRequest.head.repo.owner.login,
       repo: pullRequest.head.repo.name,
       issue_number: pullRequest.number,
-      body: `### DocuDroid Review\n\n**Instructions:** *${command.prompt}*\n**Temperature:** *${command.temperature}* ${command.emoji}\n\n---\n\n${response}`,
+      body: `### DocuDroid Review\n\n- **Instructions:** *${command.prompt}*\n- **Temperature:** *${command.temperature}* ${command.emoji}\n\n---\n\n${response}`,
     })
   
   })
