@@ -20,7 +20,7 @@ const openai = new OpenAIApi(
 const pullRequest = context.payload.pull_request
 console.log(pullRequest.head)
 
-const basePrompt = `As a professional copywriter and coder, make a pull request review for the following PR diff, there should be no grammars and typos being introduced, answer straightforward and list direct improvements formatted so humans can easily apply your suggestions.`
+const basePrompt = `As a professional copywriter and coder, make a pull request review for the following PR diff, there should be no grammars and typos being introduced, answer straightforward and list direct improvements formatted so humans can easily apply your suggestions. In the end pastee the raw final result for easy copy and paste.`
 // config instructions for each review type for GPT-Edit
 const commands = [
   {
@@ -78,7 +78,7 @@ async function start () {
     
     const response = rawResponse.data.choices[0].text.trim()
     await octokit.rest.issues.createComment({
-      owner: pullRequest.user.login, // only works for the repo owner atm
+      owner: pullRequest.head.repo.owner.login,
       repo: pullRequest.head.repo.name,
       issue_number: pullRequest.number,
       body: `### DocuDroid Review\n\n**Instructions:** *${command.prompt}*\n**Temperature:** *${command.temperature}* ${command.emoji}\n\n---\n\n${response}`,
