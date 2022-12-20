@@ -19,19 +19,23 @@ const openai = new OpenAIApi(
 // obtain current PR data
 const pullRequest = context.payload.pull_request
 
+const basePrompt = `As a professional copywriter and coder, make a pull request review for the following PR diff, there should be no grammars and typos being introduced, answer straightforward and list direct improvements`
 // config instructions for each review type for GPT-Edit
 const commands = [
   {
-    prompt: `Act as a professional copywriter and coder. Make a pull request review for the following PR diff, there should be no grammars and typos being introduced, answer straightforward and direct suggestions you have for improvements`,
+    prompt: basePrompt,
     temperature: 0,
+    emoji: '🧊',
   },
   {
-    prompt: `Act as a professional copywriter and coder. Make a pull request review for the following PR diff, there should be no grammars and typos being introduced, answer straightforward and direct suggestions you have for improvements`,
+    prompt: basePrompt,
     temperature: 0.5,
+    emoji: '🌪',
   },
   {
-    prompt: `Act as a professional copywriter and coder. Make a pull request review for the following PR diff, there should be no grammars and typos being introduced, answer straightforward and direct suggestions you have for improvements`,
+    prompt: basePrompt,
     temperature: 1,
+    emoji: '🔥',
   },
 ]
 
@@ -74,7 +78,7 @@ async function start () {
       owner: pullRequest.user.login, // only works for the repo owner atm
       repo: pullRequest.head.repo.name,
       issue_number: pullRequest.number,
-      body: `### DocuDroid Review\n\nInstructions: *${command.prompt}*\nTemperature: *${command.temperature}*\n\n---\n\n${response}`,
+      body: `### DocuDroid Review\n\n**Instructions:** *${command.prompt}*\n**Temperature:** *${command.temperature}* ${command.emoji}\n\n---\n\n${response}`,
     })
   
   })
