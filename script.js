@@ -20,23 +20,23 @@ const openai = new OpenAIApi(
 const pullRequest = context.payload.pull_request
 console.log(pullRequest.head)
 
-const basePrompt = 'As a professional copywriter and coder, make a pull request review for the following PR diff, there should be no grammars and typos being introduced, answer straightforward and list direct improvements formatted so humans can easily apply your suggestions. In the end paste the raw final result inside `````` codeblocks for easier copy-paste of the final fixed results'
+const basePrompt = 'As a professional copywriter and coder, make a pull request review for the following PR diff, there should be no grammars and typos being introduced, answer straightforward and list direct improvements and why should they be made. In the end paste the raw final result inside `````` codeblocks with all your suggestions applied'
 // config instructions for each review type for GPT-Edit
 const commands = [
   {
     prompt: basePrompt,
     temperature: 0,
-    emoji: '🧊',
+    tag: '😐 sober',
   },
   {
     prompt: basePrompt,
     temperature: 0.5,
-    emoji: '🌪',
+    tag: '😊 moderate',
   },
   {
     prompt: basePrompt,
     temperature: 1,
-    emoji: '🔥',
+    tag: '😆 wild',
   },
 ]
 
@@ -81,7 +81,7 @@ async function start () {
       owner: pullRequest.head.repo.owner.login,
       repo: pullRequest.head.repo.name,
       issue_number: pullRequest.number,
-      body: `### DocuDroid Review\n\n- **Instructions:** *${command.prompt}*\n- **Temperature:** *${command.temperature}* ${command.emoji}\n\n---\n\n${response}`,
+      body: `### DocuDroid Review\n\n- **Instructions:** *${command.prompt}*\n- **Temperature:** ${command.tag} **(${command.temperature})**\n\n---\n\n${response}`,
     })
   
   })
