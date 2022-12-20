@@ -57,7 +57,7 @@ async function start () {
   commands.forEach(async (command, i) => {
     
     // delays 5 seconds between each call so we dont spam apis
-    await new Promise(resolve => setTimeout(resolve, i * 10000))
+    await new Promise(resolve => setTimeout(resolve, i * 5000))
 
     const rawResponse = await openai.createCompletion({
       model: "text-davinci-003",
@@ -77,7 +77,7 @@ async function start () {
       body: `### DocuDroid Review\n\nInstructions: *${command.prompt}*\nTemperature: *${command.temperature}*\n\n---\n\n${response}`,
     })
   
-  }
+  })
 
 }
 
