@@ -20,7 +20,7 @@ const openai = new OpenAIApi(
 const pullRequest = context.payload.pull_request
 console.log(pullRequest.head)
 
-const basePrompt = `As a professional copywriter and coder, make a pull request review for the following PR diff, there should be no grammars and typos being introduced, answer straightforward and list direct improvements formatted so humans can easily apply your suggestions. In the end paste the raw final result inside a `````` codeblock`
+const basePrompt = 'As a professional copywriter and coder, make a pull request review for the following PR diff, there should be no grammars and typos being introduced, answer straightforward and list direct improvements formatted so humans can easily apply your suggestions. In the end paste the raw final result inside a `````` codeblock'
 // config instructions for each review type for GPT-Edit
 const commands = [
   {
