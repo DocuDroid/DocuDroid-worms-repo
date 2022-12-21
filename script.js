@@ -77,12 +77,12 @@ ${prLinesAdded}
 
 `
 
-const openaiPromptTemplateSummary = (responses) =>
+const openaiPromptTemplateSummary = (reviews) =>
 `######## INSTRUCTIONS
 
 Summarize the grammar and style reviews provided in the following list. Include any corrections and typos, as well as key points on strengths, weaknesses, and suggestions for improvement. Try to condense the information as much as possible while still keeping it clear and concise, answer in a - markdown list format:
 
-######## TEXT\n\n${responses.join('\n\n')}
+######## TEXT\n\n${reviews.join('\n\n')}
 
 ######## SUMMARY
 
@@ -101,9 +101,9 @@ const requestOpenAI = async (config) => {
   return response.data.choices[0].text.trim()
 }
 
-const getLinesAdded = (prDiff) => 
-  diff.parsePatch(prDiff.data).map(block => 
-    block.hunks.map(hunk => 
+const filterTolLeaveOnlyLinesAdded = (prDiff) => 
+  diff.parsePatch(prDiff.data).map(file => 
+    file.hunks.map(hunk => 
       hunk.lines
         .filter(line => line[0] === '+')
         .map(line => line.substring(1))
@@ -116,20 +116,18 @@ const getLinesAdded = (prDiff) =>
 
 const start = async () => {
   const prDiff = await axios.get(pullRequest.diff_url)
-  const prLinesAdded = getLinesAdded(prDiff)
+  const prLinesAdded = filterTolLeaveOnlyLinesAdded(prDiff)
 
-  const responses = await Promise.all(droids.map(async (droid, i) => {
-    const prompt = openaiPromptTemplateReview(droid, prLinesAdded)
-    const response = await requestOpenAI({
-      prompt,
+  const reviews = await Promise.all(droids.map(async (droid, i) => {
+    const review = await requestOpenAI({
+      prompt: openaiPromptTemplateReview(droid, prLinesAdded),
       temperature: droid.temperature || 0.5,
     })
-    return '## ' + droid.tag + '\n' + response
+    return '## ' + droid.tag + '\n' + review
   }))
 
-  const prompt = openaiPromptTemplateSummary(responses)
-  const response = await requestOpenAI({
-    prompt,
+  const summary = await requestOpenAI({
+    prompt: openaiPromptTemplateSummary(reviews),
     temperature: 0.3,
   })
 
@@ -137,7 +135,7 @@ const start = async () => {
     owner: pullRequest.head.repo.owner.login,
     repo: pullRequest.head.repo.name,
     issue_number: pullRequest.number,
-    body: `# 🤖 DocuDroid Review\n\n${response}\n\n<details><summary>Detailed Reviews</summary><p>\n\n${responses.join('\n\n')}\n\n</p></details>`,
+    body: `# 🤖 DocuDroid Review\n\n${summary}\n\n<details><summary>Detailed Reviews</summary><p>\n\n${reviews.join('\n\n')}\n\n</p></details>`,
   })
 }
 
