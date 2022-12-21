@@ -128,7 +128,7 @@ const start = async () => {
 
   const summary = await requestOpenAI({
     prompt: openaiPromptTemplateSummary(reviews),
-    temperature: 0.9,
+    temperature: 1,
   })
 
   await octokit.rest.issues.createComment({
