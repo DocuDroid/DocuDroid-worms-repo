@@ -76,7 +76,7 @@ async function start () {
     // delays 1 seconds between each call so we dont spam apis
     await new Promise(resolve => setTimeout(resolve, i * 1000))
     
-    const prompt = droid.prompt + `\n\n${prLinesAdded}\n\n` + 'END OF TEXT TO REVIEW. Introduce your review reasoning shortly then answer only with the review points using - list format\n\n'
+    const prompt = droid.prompt + `\n\n${prLinesAdded}\n\n` + 'END OF TEXT TO REVIEW. Answer only with the review points using - list format\n\n'
     
     const rawResponse = await openai.createCompletion({
       model: "text-davinci-003",
