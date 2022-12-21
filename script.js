@@ -104,13 +104,13 @@ async function start () {
     
     const response = rawResponse.data.choices[0].text.trim()
 
-    return response
+    return '# ' + droid.tag + '\n' + response
   
   }))
 
   console.log(responses)
 
-  const prompt = `I have the following list of suggestions START OF SUGGESTIONS\n\n${responses.join('\n\n')}\n\nEND OF SUGGESTIONS\n\nNow summarize the suggestions into a single list, merging simmilar points and maintaining all original meaning. Answer using - list format.\n\n`
+  const prompt = `Summarize the grammar and style reviews provided in the following list. Include any corrections and typos, as well as key points on strengths, weaknesses, and suggestions for improvement. Try to condense the information as much as possible while still keeping it clear and concise:\n\n${responses.join('\n\n')}`
   const rawResponse = await openai.createCompletion({
     model: "text-davinci-003",
     top_p: 1,
@@ -127,7 +127,7 @@ async function start () {
     owner: pullRequest.head.repo.owner.login,
     repo: pullRequest.head.repo.name,
     issue_number: pullRequest.number,
-    body: `# DocuDroid Review\n\n${response}`,
+    body: `# DocuDroid Review\n\n${response}\n\n<details><summary>Detailed Breakdown</summary><p>\n\n${responses.join('\n\n')}\n\n</p></details>`,
   })
 
 }
