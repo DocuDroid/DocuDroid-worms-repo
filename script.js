@@ -109,7 +109,7 @@ async function start () {
 
   console.log(responses)
 
-  const prompt = `######## INSTRUCTIONS\n\nSummarize the grammar and style reviews provided in the following list. Include any corrections and typos, as well as key points on strengths, weaknesses, and suggestions for improvement. Try to condense the information as much as possible while still keeping it clear and concise:\n\n######## TEXT\n\n${responses.join('\n\n')}\n\n######## SUMMARY\n\n}`
+  const prompt = `######## INSTRUCTIONS\n\nSummarize the grammar and style reviews provided in the following list. Include any corrections and typos, as well as key points on strengths, weaknesses, and suggestions for improvement. Try to condense the information as much as possible while still keeping it clear and concise, answer in a - markdown list format:\n\n######## TEXT\n\n${responses.join('\n\n')}\n\n######## SUMMARY\n\n}`
   const rawResponse = await openai.createCompletion({
     model: "text-davinci-003",
     top_p: 1,
