@@ -110,7 +110,7 @@ async function start () {
 
   console.log(responses)
 
-  const prompt = `I have the following list of suggestions START OF SUGGESTIONS\n\n${responses.join('\n\n')}\n\nEND OF SUGGESTIONS\n\nNow summarize the suggestions into a single list. Answer using - list format. Sepparate suggestion types if possible.\n\n`
+  const prompt = `I have the following list of suggestions START OF SUGGESTIONS\n\n${responses.join('\n\n')}\n\nEND OF SUGGESTIONS\n\nNow summarize the suggestions into a single list, merging simmilar points and maintaining all original meaning. Answer using - list format.\n\n`
   const rawResponse = await openai.createCompletion({
     model: "text-davinci-003",
     top_p: 1,
@@ -118,7 +118,7 @@ async function start () {
     frequency_penalty: 0,
     presence_penalty: 0,
     prompt,
-    temperature: 0,
+    temperature: 1,
   })
   
   const response = rawResponse.data.choices[0].text.trim()
