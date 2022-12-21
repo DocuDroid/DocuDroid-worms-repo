@@ -89,7 +89,7 @@ async function start () {
   // iterates all prompts
   const responses = await Promise.all(droids.map(async (droid, i) => {
     
-    const prompt = `#### Instructions for the reviewer:\n\n${droid.prompt}\n\n#### Text to review:\n\n${prLinesAdded}`
+    const prompt = `######## REVIEW INSTRUCTIONS\n\n${droid.prompt}\n\n########  TEXT TO REVIEW\n\n${prLinesAdded}\n\n########  YOUR REVIEW AS A LIST\n\n`
     
     const rawResponse = await openai.createCompletion({
       model: "text-davinci-003",
@@ -109,7 +109,7 @@ async function start () {
 
   console.log(responses)
 
-  const prompt = `#### Instructions:\n\nSummarize the grammar and style reviews provided in the following list. Include any corrections and typos, as well as key points on strengths, weaknesses, and suggestions for improvement. Try to condense the information as much as possible while still keeping it clear and concise:\n\n#### Text:\n\n${responses.join('\n\n')}`
+  const prompt = `######## INSTRUCTIONS\n\nSummarize the grammar and style reviews provided in the following list. Include any corrections and typos, as well as key points on strengths, weaknesses, and suggestions for improvement. Try to condense the information as much as possible while still keeping it clear and concise:\n\n######## TEXT\n\n${responses.join('\n\n')}\n\n######## SUMMARY\n\n}`
   const rawResponse = await openai.createCompletion({
     model: "text-davinci-003",
     top_p: 1,
