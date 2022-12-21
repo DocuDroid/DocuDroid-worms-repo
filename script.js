@@ -83,7 +83,7 @@ ${droid.prompt}
 
 ${prLinesAdded}
 
-########  YOUR REVIEW AS A - MARKDOWN LIST
+########  YOUR REVIEW, AS A - MARKDOWN LIST
 
 `
 
@@ -94,7 +94,7 @@ Summarize the grammar and style reviews provided in the following list. Include 
 
 ######## TEXT\n\n${reviews.join('\n\n')}
 
-######## SUMMARY AS A - MARKDOWN LIST
+######## SUMMARY, AS A - MARKDOWN LIST, SEPPARATE SUGGESTIONS BY TYPE USING ### HEADER
 
 `
 const requestOpenAI = async (config) => {
