@@ -79,11 +79,11 @@ const openaiPromptTemplateReview = (droid, prLinesAdded) =>
 
 ${droid.prompt}
 
-########  TEXT TO REVIEW
+########  TEXT TO REVIEW, IGNORE LINKS AND CODE BLOCKS
 
 ${prLinesAdded}
 
-########  YOUR REVIEW AS A LIST
+########  YOUR REVIEW AS A - MARKDOWN LIST
 
 `
 
@@ -94,7 +94,7 @@ Summarize the grammar and style reviews provided in the following list. Include 
 
 ######## TEXT\n\n${reviews.join('\n\n')}
 
-######## SUMMARY AS A LIST
+######## SUMMARY AS A - MARKDOWN LIST
 
 `
 const requestOpenAI = async (config) => {
