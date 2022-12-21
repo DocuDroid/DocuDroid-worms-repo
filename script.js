@@ -90,7 +90,7 @@ ${prLinesAdded}
 const openaiPromptTemplateSummary = (reviews) =>
 `######## INSTRUCTIONS
 
-Summarize the grammar and style reviews provided in the following list. Include critical corrections and typos first, then additional improvements. Try to condense the information as much as possible while still keeping it clear and concise. Focus on the most important aspects that were reviewed.
+Summarize the grammar and style reviews provided in the following list. Include critical typos corrections first, then additional improvements. Condense the information as much as possible while still keeping it clear and concise. Focus on the most important aspects that were reviewed, ignore generic advice that is unactionable.
 
 ######## TEXT\n\n${reviews.join('\n\n')}
 
