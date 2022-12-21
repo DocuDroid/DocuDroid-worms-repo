@@ -18,7 +18,6 @@ const openai = new OpenAIApi(
 
 // obtain current PR data
 const pullRequest = context.payload.pull_request
-console.log(pullRequest.head)
 
 const droids = [
   {
@@ -108,6 +107,8 @@ async function start () {
     return response
   
   }))
+
+  console.log(responses)
 
   const prompt = `I have the following list of suggestions START OF SUGGESTIONS\n\n${responses.join('\n\n')}\n\nEND OF SUGGESTIONS\n\nNow summarize the suggestions into a single list. Answer using - list format. Sepparate suggestion types if possible.\n\n`
   const rawResponse = await openai.createCompletion({
