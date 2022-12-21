@@ -95,7 +95,7 @@ async function start () {
     const rawResponse = await openai.createCompletion({
       model: "text-davinci-003",
       top_p: 1,
-      max_tokens: 3950 - prompt.split(' ').reduce((total, word) => total + word.length, 0),
+      max_tokens: 1500,
       frequency_penalty: 0,
       presence_penalty: 0,
       prompt,
@@ -114,7 +114,7 @@ async function start () {
   const rawResponse = await openai.createCompletion({
     model: "text-davinci-003",
     top_p: 1,
-    max_tokens: 3950 - prompt.split(' ').reduce((total, word) => total + word.length, 0),
+    max_tokens: 1500,
     frequency_penalty: 0,
     presence_penalty: 0,
     prompt,
