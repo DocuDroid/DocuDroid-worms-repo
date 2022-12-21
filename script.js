@@ -20,23 +20,12 @@ const openai = new OpenAIApi(
 const pullRequest = context.payload.pull_request
 console.log(pullRequest.head)
 
-const basePrompt = 'As a professional copywriter, make a review for the following text being added to a markdown codebase, there should be no grammar errors and typos being introduced. Answer with a straightforward list with direct improvements and why should they be made. Format your suggestion list so it\'s easy for humans to read anc copypaste. If everything is ok just reply "LGTM :shipit:".'
+const basePrompt = 'As a professional copywriter, make a review for the following text being added to a markdown codebase, there should be NO GRAMMAR ERRORS and NO TYPOS being introduced. If everything is ok just reply "LGTM :shipit:".'
 // config instructions for each review type for GPT-Edit
 const commands = [
   {
     prompt: basePrompt,
-    temperature: 0,
-    tag: '😐 sober',
-  },
-  {
-    prompt: basePrompt,
     temperature: 0.5,
-    tag: '😊 moderate',
-  },
-  {
-    prompt: basePrompt,
-    temperature: 1,
-    tag: '😆 wild',
   },
 ]
 
@@ -80,7 +69,7 @@ async function start () {
       owner: pullRequest.head.repo.owner.login,
       repo: pullRequest.head.repo.name,
       issue_number: pullRequest.number,
-      body: `### DocuDroid Review\n\n- **Instructions:** \`${command.prompt}\`\n\n- **Temperature:** ${command.tag} **(${command.temperature})**\n\n---\n\n${response}`,
+      body: `### DocuDroid Review\n\n${response}`,
     })
   
   })
