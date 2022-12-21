@@ -46,7 +46,6 @@ async function start () {
   const prDiff = await axios.get(pullRequest.diff_url)
   
   // gets all lines added in this PR diff
-
   const prLinesAdded = diff.parsePatch(prDiff.data).map(block => 
     block.hunks.map(hunk => 
       hunk.lines
