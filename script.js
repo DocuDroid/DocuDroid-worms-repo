@@ -80,7 +80,7 @@ ${prLinesAdded}
 const openaiPromptTemplateSummary = (reviews) =>
 `######## INSTRUCTIONS
 
-Summarize the grammar and style reviews provided in the following list. Include any corrections and typos, as well as key points on strengths, weaknesses, and suggestions for improvement. Try to condense the information as much as possible while still keeping it clear and concise, answer in a - markdown list format:
+Summarize the grammar and style reviews provided in the following list. Include any corrections and typos, as well as key points on strengths, weaknesses, and suggestions for improvement. Try to condense the information as much as possible while still keeping it clear and concise. Answer in a - markdown list format:
 
 ######## TEXT\n\n${reviews.join('\n\n')}
 
@@ -128,7 +128,7 @@ const start = async () => {
 
   const summary = await requestOpenAI({
     prompt: openaiPromptTemplateSummary(reviews),
-    temperature: 0.3,
+    temperature: 0.9,
   })
 
   await octokit.rest.issues.createComment({
