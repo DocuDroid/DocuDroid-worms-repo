@@ -20,21 +20,21 @@ const openai = new OpenAIApi(
 const pullRequest = context.payload.pull_request
 console.log(pullRequest.head)
 
-const basePrompt = 'As a professional copywriter, make a review for the following text being added to a markdown codebase, there should be NO GRAMMAR ERRORS and NO TYPOS being introduced, do not allow them to pass. Reply with list of suggestion and reasoning for them. START OF TEXT TO REVIEW:'
+const basePrompt = ' a professional copywriter. Make a review for the following text being added to a markdown codebase, there should be NO GRAMMAR ERRORS and NO TYPOS being introduced, do not allow them to pass. Reply with list of suggestion and reasoning for them, also the line to be fixed. START OF TEXT TO REVIEW:'
 
 const commands = [
   {
-    prompt: basePrompt,
+    prompt: 'You are Steady Teddy 🤠, ' + basePrompt,
     temperature: 0,
     tag: '🤠 Steady Teddy'
   },
   {
-    prompt: basePrompt,
+    prompt: 'You are Cool Cole 😎, ' + basePrompt,
     temperature: 0.5,
     tag: '😎 Cool Cole'
   },
   {
-    prompt: basePrompt,
+    prompt: 'You are Party Jack 🥳, ' + basePrompt,
     temperature: 1,
     tag: '🥳 Party Jack'
   },
