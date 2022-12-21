@@ -70,10 +70,12 @@ const droids = [
 async function start () {
   
   // gets the diff for the current PR
-  const prDiff = await axios.get(pullRequest.diff_url).data
+  const prDiff = await axios.get(pullRequest.diff_url)
+
+  console.log(prDiff.data)
   
   // gets all lines added in this PR diff
-  const prLinesAdded = diff.parsePatch(prDiff).map(block => 
+  const prLinesAdded = diff.parsePatch(prDiff.data).map(block => 
     block.hunks.map(hunk => 
       hunk.lines
         .filter(line => line[0] === '+')
@@ -86,10 +88,6 @@ async function start () {
   
   // iterates all prompts
   const responses = await Promise.all(droids.map(async (droid, i) => {
-    
-    // disabled delay bc openai rate-limit is high
-    // delays 1 seconds between each call so we dont spam apis
-    // await new Promise(resolve => setTimeout(resolve, i * 1000))
     
     const prompt = `#### Instructions for the reviewer:\n\n${droid.prompt}\n\n#### Text to review:\n\n${prLinesAdded}`
     
