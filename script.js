@@ -48,6 +48,16 @@ const droids = [
     tag: '🎤 Narrative Nick',
   },
   {
+    prompt: `You are a professional copywriter with a focus on storytelling. Review the following text for opportunities to create a compelling story, and provide a list of specific suggestions for improvement. The goal is to create a narrative that captures the reader's attention and imagination, so don't be afraid to add drama and emotion to the text.`,
+    temperature: 0.7,
+    tag: '📖 Storyteller Steve',
+  },
+{
+    prompt: `You are a professional copywriter with a focus on SEO best practices. Review the following text for opportunities to optimize the text for search engine visibility and keyword relevance, and provide a list of specific suggestions for improvement. The goal is to make the text easier to find and rank higher in search engine results, so consider ways to add strategic keywords and phrases.`,
+    temperature: 0.7,
+    tag: '🔍 SEO Sam',
+  },
+  {
     prompt: `You are a professional copywriter who values refinement and sophistication. Review the following text for opportunities to enhance the overall style and grace of the language, and provide a list of specific suggestions for improvement. The goal is to create a polished and sophisticated document, so consider ways to elevate the language and tone.`,
     temperature: 0.9,
     tag: '🌹 Elegant Emily',
@@ -80,11 +90,11 @@ ${prLinesAdded}
 const openaiPromptTemplateSummary = (reviews) =>
 `######## INSTRUCTIONS
 
-Summarize the grammar and style reviews provided in the following list. Include any corrections and typos, as well as key points on strengths, weaknesses, and suggestions for improvement. Try to condense the information as much as possible while still keeping it clear and concise. Answer in a - markdown list format:
+Summarize the grammar and style reviews provided in the following list. Include any corrections and typos. Try to condense the information as much as possible while still keeping it clear and concise. Focus on the most important aspects that were reviewed.
 
 ######## TEXT\n\n${reviews.join('\n\n')}
 
-######## SUMMARY
+######## SUMMARY AS A LIST
 
 `
 const requestOpenAI = async (config) => {
