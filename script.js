@@ -20,12 +20,12 @@ const openai = new OpenAIApi(
 const pullRequest = context.payload.pull_request
 console.log(pullRequest.head)
 
-const basePrompt = 'As a professional copywriter, make a review for the following text being added to a markdown codebase, there should be NO GRAMMAR ERRORS and NO TYPOS being introduced. If everything is ok just reply "LGTM :shipit:".'
+const basePrompt = 'As a professional copywriter, make a review for the following text being added to a markdown codebase, there should be NO GRAMMAR ERRORS and NO TYPOS being introduced, do not allow them to pass. If everything is ok just reply "LGTM :shipit:". Here is the text:'
 // config instructions for each review type for GPT-Edit
 const commands = [
   {
     prompt: basePrompt,
-    temperature: 0.5,
+    temperature: 0.7,
   },
 ]
 
