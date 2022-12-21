@@ -5,18 +5,15 @@ const diff = require('diff')
 
 // process.env is set by github repo settings at environments secrets
 
-// start github api
 const octokit = github.getOctokit(process.env.GH_TOKEN)
 const context = github.context
 
-// start openai api
 const openai = new OpenAIApi(
   new Configuration({
     apiKey: process.env.OPENAI_TOKEN
   })
 )
 
-// obtain current PR data
 const pullRequest = context.payload.pull_request
 
 const droids = [
@@ -67,15 +64,45 @@ const droids = [
   },
 ]
 
-async function start () {
-  
-  // gets the diff for the current PR
-  const prDiff = await axios.get(pullRequest.diff_url)
+const openaiPromptTemplateReview = (droid, prLinesAdded) =>
+`######## REVIEW INSTRUCTIONS
 
-  console.log(prDiff.data)
+${droid.prompt}
+
+########  TEXT TO REVIEW
+
+${prLinesAdded}
+
+########  YOUR REVIEW AS A LIST
+
+`
+
+const openaiPromptTemplateSummary = (responses) =>
+`######## INSTRUCTIONS
+
+Summarize the grammar and style reviews provided in the following list. Include any corrections and typos, as well as key points on strengths, weaknesses, and suggestions for improvement. Try to condense the information as much as possible while still keeping it clear and concise, answer in a - markdown list format:
+
+######## TEXT\n\n${responses.join('\n\n')}
+
+######## SUMMARY
+
+`
+const requestOpenAI = async (config) => {
+  const response = await openai.createCompletion({
+    model: "text-davinci-003",
+    top_p: 1,
+    max_tokens: 1500,
+    frequency_penalty: 0,
+    presence_penalty: 0,
+    temperature: 0.5,
+    ...config
+  })
   
-  // gets all lines added in this PR diff
-  const prLinesAdded = diff.parsePatch(prDiff.data).map(block => 
+  return response.data.choices[0].text.trim()
+}
+
+const getLinesAdded = (prDiff) => 
+  diff.parsePatch(prDiff.data).map(block => 
     block.hunks.map(hunk => 
       hunk.lines
         .filter(line => line[0] === '+')
@@ -85,42 +112,26 @@ async function start () {
         .trim()
     ).join('\n\n')
   ).join('\n\n').trim()
-  
-  // iterates all prompts
+
+
+const start = async () => {
+  const prDiff = await axios.get(pullRequest.diff_url)
+  const prLinesAdded = getLinesAdded(prDiff)
+
   const responses = await Promise.all(droids.map(async (droid, i) => {
-    
-    const prompt = `######## REVIEW INSTRUCTIONS\n\n${droid.prompt}\n\n########  TEXT TO REVIEW\n\n${prLinesAdded}\n\n########  YOUR REVIEW AS A LIST\n\n`
-    
-    const rawResponse = await openai.createCompletion({
-      model: "text-davinci-003",
-      top_p: 1,
-      max_tokens: 1500,
-      frequency_penalty: 0,
-      presence_penalty: 0,
+    const prompt = openaiPromptTemplateReview(droid, prLinesAdded)
+    const response = await requestOpenAI({
       prompt,
       temperature: droid.temperature || 0.5,
     })
-    
-    const response = rawResponse.data.choices[0].text.trim()
-
     return '## ' + droid.tag + '\n' + response
-  
   }))
 
-  console.log(responses)
-
-  const prompt = `######## INSTRUCTIONS\n\nSummarize the grammar and style reviews provided in the following list. Include any corrections and typos, as well as key points on strengths, weaknesses, and suggestions for improvement. Try to condense the information as much as possible while still keeping it clear and concise, answer in a - markdown list format:\n\n######## TEXT\n\n${responses.join('\n\n')}\n\n######## SUMMARY\n\n}`
-  const rawResponse = await openai.createCompletion({
-    model: "text-davinci-003",
-    top_p: 1,
-    max_tokens: 1500,
-    frequency_penalty: 0,
-    presence_penalty: 0,
+  const prompt = openaiPromptTemplateSummary(responses)
+  const response = requestOpenAI({
     prompt,
     temperature: 0.3,
   })
-  
-  const response = rawResponse.data.choices[0].text.trim()
 
   await octokit.rest.issues.createComment({
     owner: pullRequest.head.repo.owner.login,
@@ -128,7 +139,6 @@ async function start () {
     issue_number: pullRequest.number,
     body: `# 🤖 DocuDroid Review\n\n${response}\n\n<details><summary>Detailed Reviews</summary><p>\n\n${responses.join('\n\n')}\n\n</p></details>`,
   })
-
 }
 
 start()
