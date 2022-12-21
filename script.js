@@ -20,7 +20,7 @@ const openai = new OpenAIApi(
 const pullRequest = context.payload.pull_request
 console.log(pullRequest.head)
 
-const basePrompt = 'As a professional copywriter, make a review for the following text being added to a markdown codebase, there should be NO GRAMMAR ERRORS and NO TYPOS being introduced, do not allow them to pass. Reply with list of suggestion and reasoning for them. In the end, leave a emoji representing your review. Here is the text:'
+const basePrompt = 'As a professional copywriter, make a review for the following text being added to a markdown codebase, there should be NO GRAMMAR ERRORS and NO TYPOS being introduced, do not allow them to pass. Reply with list of suggestion and reasoning for them. In the end, leave a emoji representing your review. START OF TEXT TO REVIEW:'
 // config instructions for each review type for GPT-Edit
 const commands = [
   {
@@ -52,7 +52,7 @@ async function start () {
     // delays 5 seconds between each call so we dont spam apis
     await new Promise(resolve => setTimeout(resolve, i * 5000))
     
-    const prompt = command.prompt + `\n\n${prLinesAdded}\n\n`
+    const prompt = command.prompt + `\n\n${prLinesAdded}\n\n` + 'END OF TEXT TO REVIEW. Answer only with the review now:'
     
     const rawResponse = await openai.createCompletion({
       model: "text-davinci-003",
