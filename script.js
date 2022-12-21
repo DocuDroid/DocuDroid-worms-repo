@@ -21,11 +21,22 @@ const pullRequest = context.payload.pull_request
 console.log(pullRequest.head)
 
 const basePrompt = 'As a professional copywriter, make a review for the following text being added to a markdown codebase, there should be NO GRAMMAR ERRORS and NO TYPOS being introduced, do not allow them to pass. Reply with list of suggestion and reasoning for them. START OF TEXT TO REVIEW:'
-// config instructions for each review type for GPT-Edit
+
 const commands = [
   {
     prompt: basePrompt,
-    temperature: 0.75,
+    temperature: 0,
+    tag: '🤠 Steady Teddy'
+  },
+  {
+    prompt: basePrompt,
+    temperature: 0.5,
+    tag: '😎 Cool Cole'
+  },
+  {
+    prompt: basePrompt,
+    temperature: 1,
+    tag: '🥳 Party Jack'
   },
 ]
 
@@ -47,10 +58,10 @@ async function start () {
   ).join('\n\n').trim()
   
   // iterates all prompts
-  commands.forEach(async (command, i) => {
+  const responses = await Promise.all(commands.map(async (command, i) => {
     
-    // delays 5 seconds between each call so we dont spam apis
-    await new Promise(resolve => setTimeout(resolve, i * 5000))
+    // delays 1 seconds between each call so we dont spam apis
+    await new Promise(resolve => setTimeout(resolve, i * 1000))
     
     const prompt = command.prompt + `\n\n${prLinesAdded}\n\n` + 'END OF TEXT TO REVIEW. Answer only with the review now:'
     
@@ -65,13 +76,16 @@ async function start () {
     })
     
     const response = rawResponse.data.choices[0].text.trim()
-    await octokit.rest.issues.createComment({
-      owner: pullRequest.head.repo.owner.login,
-      repo: pullRequest.head.repo.name,
-      issue_number: pullRequest.number,
-      body: `### DocuDroid Review\n\n${response}`,
-    })
+
+    return '**' + command.tag + '**: ' + response
   
+  }))
+
+  await octokit.rest.issues.createComment({
+    owner: pullRequest.head.repo.owner.login,
+    repo: pullRequest.head.repo.name,
+    issue_number: pullRequest.number,
+    body: `# DocuDroid Review\n\n${responses.join('\n\n')}`,
   })
 
 }
