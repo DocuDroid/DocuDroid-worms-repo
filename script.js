@@ -70,10 +70,10 @@ const droids = [
 async function start () {
   
   // gets the diff for the current PR
-  const prDiff = await axios.get(pullRequest.diff_url)
+  const prDiff = await axios.get(pullRequest.diff_url).data
   
   // gets all lines added in this PR diff
-  const prLinesAdded = diff.parsePatch(prDiff.data).map(block => 
+  const prLinesAdded = diff.parsePatch(prDiff).map(block => 
     block.hunks.map(hunk => 
       hunk.lines
         .filter(line => line[0] === '+')
@@ -87,8 +87,9 @@ async function start () {
   // iterates all prompts
   const responses = await Promise.all(droids.map(async (droid, i) => {
     
+    // disabled delay bc openai rate-limit is high
     // delays 1 seconds between each call so we dont spam apis
-    await new Promise(resolve => setTimeout(resolve, i * 1000))
+    // await new Promise(resolve => setTimeout(resolve, i * 1000))
     
     const prompt = `${droid.prompt} START OF TEXT TO REVIEW:\n\n${prLinesAdded}\n\nEND OF TEXT TO REVIEW. Answer using - list format\n\n`
     
