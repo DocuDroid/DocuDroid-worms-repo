@@ -92,7 +92,7 @@ async function start () {
     
     const response = rawResponse.data.choices[0].text.trim()
 
-    return '**' + command.tag + '**: ' + response
+    return '### ' + command.tag + '\n' + response
   
   }))
 
@@ -100,7 +100,7 @@ async function start () {
     owner: pullRequest.head.repo.owner.login,
     repo: pullRequest.head.repo.name,
     issue_number: pullRequest.number,
-    body: `# DocuDroid Review\n\n${responses.join('\n\n')}`,
+    body: `# DocuDroid Reviews\n\n${responses.join('\n\n')}`,
   })
 
 }
