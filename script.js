@@ -48,6 +48,16 @@ const droids = [
     tag: '🎤 Narrative Nick',
   },
   {
+    prompt: `You are a professional copywriter with a focus on storytelling. Review the following text for opportunities to create a compelling story, and provide a list of specific suggestions for improvement. The goal is to create a narrative that captures the reader's attention and imagination, so don't be afraid to add drama and emotion to the text.`,
+    temperature: 0.7,
+    tag: '📖 Storyteller Steve',
+  },
+{
+    prompt: `You are a professional copywriter with a focus on SEO best practices. Review the following text for opportunities to optimize the text for search engine visibility and keyword relevance, and provide a list of specific suggestions for improvement. The goal is to make the text easier to find and rank higher in search engine results, so consider ways to add strategic keywords and phrases.`,
+    temperature: 0.7,
+    tag: '🔍 SEO Sam',
+  },
+  {
     prompt: `You are a professional copywriter who values refinement and sophistication. Review the following text for opportunities to enhance the overall style and grace of the language, and provide a list of specific suggestions for improvement. The goal is to create a polished and sophisticated document, so consider ways to elevate the language and tone.`,
     temperature: 0.9,
     tag: '🌹 Elegant Emily',
@@ -77,14 +87,14 @@ ${prLinesAdded}
 
 `
 
-const openaiPromptTemplateSummary = (responses) =>
+const openaiPromptTemplateSummary = (reviews) =>
 `######## INSTRUCTIONS
 
-Summarize the grammar and style reviews provided in the following list. Include any corrections and typos, as well as key points on strengths, weaknesses, and suggestions for improvement. Try to condense the information as much as possible while still keeping it clear and concise, answer in a - markdown list format:
+Summarize the grammar and style reviews provided in the following list. Include any corrections and typos. Try to condense the information as much as possible while still keeping it clear and concise. Focus on the most important aspects that were reviewed.
 
-######## TEXT\n\n${responses.join('\n\n')}
+######## TEXT\n\n${reviews.join('\n\n')}
 
-######## SUMMARY
+######## SUMMARY AS A LIST
 
 `
 const requestOpenAI = async (config) => {
@@ -101,9 +111,9 @@ const requestOpenAI = async (config) => {
   return response.data.choices[0].text.trim()
 }
 
-const getLinesAdded = (prDiff) => 
-  diff.parsePatch(prDiff.data).map(block => 
-    block.hunks.map(hunk => 
+const filterTolLeaveOnlyLinesAdded = (prDiff) => 
+  diff.parsePatch(prDiff.data).map(file => 
+    file.hunks.map(hunk => 
       hunk.lines
         .filter(line => line[0] === '+')
         .map(line => line.substring(1))
@@ -116,28 +126,26 @@ const getLinesAdded = (prDiff) =>
 
 const start = async () => {
   const prDiff = await axios.get(pullRequest.diff_url)
-  const prLinesAdded = getLinesAdded(prDiff)
+  const prLinesAdded = filterTolLeaveOnlyLinesAdded(prDiff)
 
-  const responses = await Promise.all(droids.map(async (droid, i) => {
-    const prompt = openaiPromptTemplateReview(droid, prLinesAdded)
-    const response = await requestOpenAI({
-      prompt,
+  const reviews = await Promise.all(droids.map(async (droid, i) => {
+    const review = await requestOpenAI({
+      prompt: openaiPromptTemplateReview(droid, prLinesAdded),
       temperature: droid.temperature || 0.5,
     })
-    return '## ' + droid.tag + '\n' + response
+    return '## ' + droid.tag + '\n' + review
   }))
 
-  const prompt = openaiPromptTemplateSummary(responses)
-  const response = requestOpenAI({
-    prompt,
-    temperature: 0.3,
+  const summary = await requestOpenAI({
+    prompt: openaiPromptTemplateSummary(reviews),
+    temperature: 1,
   })
 
   await octokit.rest.issues.createComment({
     owner: pullRequest.head.repo.owner.login,
     repo: pullRequest.head.repo.name,
     issue_number: pullRequest.number,
-    body: `# 🤖 DocuDroid Review\n\n${response}\n\n<details><summary>Detailed Reviews</summary><p>\n\n${responses.join('\n\n')}\n\n</p></details>`,
+    body: `# 🤖 DocuDroid Review\n\n${summary}\n\n<details><summary>Detailed Reviews</summary><p>\n\n${reviews.join('\n\n')}\n\n</p></details>`,
   })
 }
 
