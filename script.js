@@ -85,7 +85,7 @@ ${prLinesAdded}
 
 ########  YOUR REVIEW, AS A - MARKDOWN LIST
 
--`
+`
 
 const openaiPromptTemplateSummary = (reviews) =>
 `######## INSTRUCTIONS
@@ -96,7 +96,7 @@ Summarize the grammar and style reviews provided in the following list. Include 
 
 ######## SUMMARY, AS A - MARKDOWN LIST
 
--`
+`
 
 const requestOpenAI = async (config) => {
   const response = await openai.createCompletion({
