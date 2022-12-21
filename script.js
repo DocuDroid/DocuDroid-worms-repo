@@ -85,18 +85,19 @@ ${prLinesAdded}
 
 ########  YOUR REVIEW, AS A - MARKDOWN LIST
 
-`
+-`
 
 const openaiPromptTemplateSummary = (reviews) =>
 `######## INSTRUCTIONS
 
-Summarize the grammar and style reviews provided in the following list. Include any corrections and typos. Try to condense the information as much as possible while still keeping it clear and concise. Focus on the most important aspects that were reviewed.
+Summarize the grammar and style reviews provided in the following list. Include critical corrections and typos first, then additional improvements. Try to condense the information as much as possible while still keeping it clear and concise. Focus on the most important aspects that were reviewed.
 
 ######## TEXT\n\n${reviews.join('\n\n')}
 
-######## SUMMARY, AS A - MARKDOWN LIST, SEPPARATE SUGGESTIONS BY TYPE USING ### HEADER
+######## SUMMARY, AS A - MARKDOWN LIST
 
-`
+-`
+
 const requestOpenAI = async (config) => {
   const response = await openai.createCompletion({
     model: "text-davinci-003",
