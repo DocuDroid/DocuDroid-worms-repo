@@ -128,7 +128,7 @@ const start = async () => {
   }))
 
   const prompt = openaiPromptTemplateSummary(responses)
-  const response = requestOpenAI({
+  const response = await requestOpenAI({
     prompt,
     temperature: 0.3,
   })
