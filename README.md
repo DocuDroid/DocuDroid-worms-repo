@@ -17,6 +17,6 @@ This Github workflow action sends any new text added in a PR to GPT Edit for gra
 3) It's done, new PRs opened against your repo will have a reply with grammar fixes for new text added
 4) If you want to change the Edit prompt being sent to OpenAI change this [line](https://github.com/MarcoWorms/actions-test/blob/main/script.js#L34)
 
-## How it Works
+## How it works
 
 ![Untitled-2022-12-20-1148](https://user-images.githubusercontent.com/7863230/208957775-f2b2cd85-95c5-46ad-be63-7422fd8820a5.png)
