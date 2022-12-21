@@ -108,8 +108,8 @@ async function start () {
     return response
   
   }))
-  
-  const prompt = `I have the following text START OF TEXT:\n\n${prLinesAdded}\n\nEND OF TEXT\n\nAnd the following responses START OF RESPONSES\n\n${responses.join('\n\n')}\n\nEND OF RESPONSES\n\nNow summarize the suggestions into a single list of improvements. Answer using - list format. Sepparate suggestion types if possible.\n\n`
+
+  const prompt = `I have the following text START OF TEXT:\n\n${prLinesAdded}\n\nEND OF TEXT\n\nAnd the following suggestions START OF SUGGESTIONS\n\n${responses.join('\n\n')}\n\nEND OF SUGGESTIONS\n\nNow summarize the suggestions into a single list of improvements. Answer using - list format. Sepparate suggestion types if possible.\n\n`
   const rawResponse = await openai.createCompletion({
     model: "text-davinci-003",
     top_p: 1,
