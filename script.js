@@ -20,38 +20,36 @@ const openai = new OpenAIApi(
 const pullRequest = context.payload.pull_request
 console.log(pullRequest.head)
 
-const basePrompt = ' a professional copywriter. Make a review for the following text being added to a markdown codebase, there should be NO GRAMMAR ERRORS and NO TYPOS being introduced, do not allow them to pass. Reply with list of suggestion and reasoning for them, also the line to be fixed. START OF TEXT TO REVIEW:'
-
 const commands = [
   {
-    prompt: 'You are Steady Teddy 🤠, ' + basePrompt,
-    temperature: 0,
-    tag: '🤠 Steady Teddy'
-  },
-  {
-    prompt: 'You are Cool Cole 😎, ' + basePrompt,
-    temperature: 0.5,
-    tag: '😎 Cool Cole'
-  },
-  {
-    prompt: 'You are Party Jack 🥳, ' + basePrompt,
-    temperature: 1,
-    tag: '🥳 Party Jack'
-  },
-  {
-    prompt: `You are Critical Kate 🧐, a professional copywriter with a keen eye for detail. Review the following text for grammar errors and typos, and provide a list of specific suggestions for improvement. Remember, the goal is to produce a polished and error-free document, so don't let any mistakes slip through! START OF TEXT TO REVIEW:`,
+    prompt: `You are a professional copywriter with a keen eye for detail. Review the following text for grammar errors and typos, and provide a list of specific suggestions for improvement. Remember, the goal is to produce a polished and error-free document, so don't let any mistakes slip through! START OF TEXT TO REVIEW:`,
     temperature: 0.1,
     tag: '🧐 Critical Kate'
   },
   {
-    prompt: `You are Creative Cindy 🎨, a professional copywriter with a flair for the creative and expressive. Review the following text for opportunities to add more personality and flair, and provide a list of specific suggestions for improvement. The goal is to make the text more engaging and memorable, so don't be afraid to get creative! START OF TEXT TO REVIEW:`,
+    prompt: `You are a professional copywriter with a flair for the creative and expressive. Review the following text for opportunities to add more personality and flair, and provide a list of specific suggestions for improvement. The goal is to make the text more engaging and memorable, so don't be afraid to get creative! START OF TEXT TO REVIEW:`,
     temperature: 0.9,
     tag: '🎨 Creative Cindy'
   },
   {
-    prompt: `You are Balanced Ben 😐, a professional copywriter with a balanced and objective approach. Review the following text for both strengths and weaknesses, and provide a list of specific suggestions for improvement. The goal is to produce a well-rounded and high-quality document, so consider all aspects of the text in your review. START OF TEXT TO REVIEW:`,
+    prompt: `You are a professional copywriter with a balanced and objective approach. Review the following text for both strengths and weaknesses, and provide a list of specific suggestions for improvement. The goal is to produce a well-rounded and high-quality document, so consider all aspects of the text in your review. START OF TEXT TO REVIEW:`,
     temperature: 0.5,
     tag: '😐 Balanced Ben'
+  },
+  {
+    prompt: `You are a professional copywriter who values simplicity and concision. Review the following text for opportunities to reduce wordiness and complexity, and provide a list of specific suggestions for improvement. Remember, the goal is to communicate your message clearly and efficiently, so eliminate any unnecessary or redundant words and phrases. START OF TEXT TO REVIEW:`,
+    temperature: 0.1,
+    tag: '🤐 Concise Carol'
+  },
+  {
+    prompt: `You are a professional copywriter who values refinement and sophistication. Review the following text for opportunities to enhance the overall style and grace of the language, and provide a list of specific suggestions for improvement. The goal is to create a polished and sophisticated document, so consider ways to elevate the language and tone. START OF TEXT TO REVIEW:`,
+    temperature: 0.9,
+    tag: '🌹 Elegant Emily'
+  },
+  {
+    prompt: `You are a professional copywriter who values originality and creativity. Review the following text for opportunities to inject more personality and humor into the language, and provide a list of specific suggestions for improvement. The goal is to make the text more engaging and memorable, so don't be afraid to get creative and think outside the box! START OF TEXT TO REVIEW:`,
+    temperature: 0.5,
+    tag: '🌈 Quirky Quinn'
   },
 ]
 
@@ -78,7 +76,7 @@ async function start () {
     // delays 1 seconds between each call so we dont spam apis
     await new Promise(resolve => setTimeout(resolve, i * 1000))
     
-    const prompt = command.prompt + `\n\n${prLinesAdded}\n\n` + 'END OF TEXT TO REVIEW. Answer only with the review now:'
+    const prompt = command.prompt + `\n\n${prLinesAdded}\n\n` + 'END OF TEXT TO REVIEW. Answer only with the review now:\n\n'
     
     const rawResponse = await openai.createCompletion({
       model: "text-davinci-003",
