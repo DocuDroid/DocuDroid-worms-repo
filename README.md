@@ -8,7 +8,7 @@ Avoid pushing copy errors to prod!
 
 This Github workflow action sends any new text added in a PR to GPT Edit for grammar review.
 
-- [Latest Version Showcase](https://github.com/MarcoWorms/DocuDroid/pull/49)
+- [Latest Version Showcase](https://github.com/MarcoWorms/DocuDroid/pull/110)
 
 ## Add to your repo
 
