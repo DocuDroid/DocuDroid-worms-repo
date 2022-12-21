@@ -117,7 +117,7 @@ async function start () {
     frequency_penalty: 0,
     presence_penalty: 0,
     prompt,
-    temperature: 1,
+    temperature: 0.3,
   })
   
   const response = rawResponse.data.choices[0].text.trim()
