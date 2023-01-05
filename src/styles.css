@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Oswald:wght@300;500&display=swap');
+
+* {
+  box-sizing: border-box;
+  color: black;
+}
+
+.App {
+  text-align: center;
+}
+
+button {
+  padding: 15px 40px;
+  font-family: Open Sans, 'sans-serif';
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  background-color: black;
+  border-color: black;
+  border-radius: 2px;
+  color: white;
+}
+
+button:hover {
+  background-color: lightskyblue;
+  color: black;
+}
+
+button.inverse {
+  background-color: white;
+  color: black;
+}
+button.inverse:hover {
+  background-color: lightskyblue;
+}
