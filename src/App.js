@@ -228,6 +228,7 @@ const Router = props => {
 }
 
 const RouteLink = props => (
+  // eslint-disable-next-line jsx-a11y/anchor-is-valid
   <a
     onClick={() => {
       !props.disabled && props.setRoute(props.tag)
