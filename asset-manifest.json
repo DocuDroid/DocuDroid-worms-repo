@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.74152f9d.css",
-    "main.js": "/static/js/main.cd1dac63.js",
-    "index.html": "/index.html",
-    "main.74152f9d.css.map": "/static/css/main.74152f9d.css.map",
-    "main.cd1dac63.js.map": "/static/js/main.cd1dac63.js.map"
+    "main.css": "/docudroid/static/css/main.74152f9d.css",
+    "main.js": "/docudroid/static/js/main.cd1dac63.js",
+    "index.html": "/docudroid/index.html",
+    "main.74152f9d.css.map": "/docudroid/static/css/main.74152f9d.css.map",
+    "main.cd1dac63.js.map": "/docudroid/static/js/main.cd1dac63.js.map"
   },
   "entrypoints": [
     "static/css/main.74152f9d.css",
