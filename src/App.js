@@ -244,6 +244,7 @@ const RouteLink = props => (
       wordSpacing: '100%',
       flexBasis: 0,
     }}
+		href="#"
   >
     {/* {props.route === props.tag && '> '} */}
     {props.text}
@@ -322,7 +323,7 @@ export default function App() {
         >
           Droid
         </span>
-        <img style={{ marginLeft: 5 }} src="./logo.png" width="80px" />
+        <img style={{ marginLeft: 5 }} src="./logo.png" width="80px" alt="logo" />
       </h1>
       {/* <p>version: 5 </p> */}
       {apiKey ? (
