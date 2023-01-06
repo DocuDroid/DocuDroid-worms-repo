@@ -1,5 +1,6 @@
 {
   "name": "docudroid",
+  "homepage": "https://worms.io/docudroid/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
