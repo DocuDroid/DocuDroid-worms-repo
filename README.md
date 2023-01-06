@@ -1,6 +1,6 @@
 # DocuDroid
 
-- Live App: worms.io/docudroid
+- Live App: [worms.io/docudroid](https://worms.io/docudroid)
 
 Tech Writing helper droid 🤖
 
