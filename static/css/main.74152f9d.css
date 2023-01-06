@@ -1,0 +1,2 @@
+@import url(https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Oswald:wght@300;500&display=swap);*{box-sizing:border-box;color:#000}.App{text-align:center}button{background-color:#000;border-color:#000;border-radius:2px;color:#fff;cursor:pointer;font-family:Open Sans,"sans-serif";font-size:14px;font-weight:500;padding:15px 40px;transition:all .1s ease-in-out}button:hover{background-color:#87cefa;color:#000}button.inverse{background-color:#fff;color:#000}button.inverse:hover{background-color:#87cefa}
+/*# sourceMappingURL=main.74152f9d.css.map*/

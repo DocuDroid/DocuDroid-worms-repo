@@ -1,2 +1,0 @@
-@import url(https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Oswald:wght@300;500&display=swap);*{box-sizing:border-box;color:#000}.App{text-align:center}button{padding:15px 40px;font-family:Open Sans,"sans-serif";font-weight:500;font-size:14px;cursor:pointer;transition:all .1s ease-in-out;background-color:#000;border-color:#000;border-radius:2px;color:#fff}button.inverse,button:hover{background-color:#fff;color:#000}button.inverse:hover{background-color:#000;color:#fff}
-/*# sourceMappingURL=main.499cb588.chunk.css.map */
